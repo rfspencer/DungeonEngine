@@ -53,6 +53,20 @@ Menu system. Main menu: new game, load game, quit.
 #### Map
 The map tiles are linked lists, but can have multiple pathways. Generate a map file for each dungeon that you can read in to make the nodes. Each node holds loot, if any, and monsters, if any.
 
+Make a 2D vector array for the total map, each holding a pointer to their map node. This is all handled by the Map class, building the 2D vector array from data sent to it from the map creator.
+
+File format: file lines represent map rows, and tab seperated columns for map columns. Each tab encapsulated map tile will have a series of comma seperated values that hold the map tile's information. Initial column layout may be:
+```angular2html
+string TILE_ID, bool HAS_TRAP, TrapType TRAP, bool HAS_ENEMY, vector<EnemyType> EnemyList, bool HAS_LOOT, vector<LootItem> LootList
+
+- TrapType: Struct of trap parameters.
+- vector<EnemyType>: Vector of Enemy pointers.
+- vector<LootItem>: Vector of LootItem's.
+```
+
+The **TILE_ID** parameter is what is used to track the player's location. The Map can pass that location off to the GameState or World, not sure which yet.
+
+
 #### Hero Classes
 - Rogue: Chance to see traps, monsters, loot within a radius. Sneak attack.
 - Warrior: Attack and damage bonus. Armor boost. Physical traits enhanced.
@@ -63,7 +77,7 @@ Enemy class. Archer. Fighter. Shaman. Boss.
 
 # Journal
 ### 7/17/2024
-Created requirements document with minimum requirements to make a functional game. Began R&D on how to approach the user interface. There's a few low-level libraries that can do the arrow key movement, but I want to see if I can do it with native C++ Standard Library modules first. It seems [Windows.h](https://learn.microsoft.com/en-us/windows/console/console-functions) has some functions that control the terminal window directly, so need to explore that.
+Created requirements document with minimum requirements to make a functional game. Began R&D on how to approach the user interface. There's a few low-level libraries that can do the arrow key movement, but I want to see if I can do it with native C++ Standard Library modules first. It seems [Windows.h](https://learn.microsoft.com/en-us/windows/console/console-functions) has some functions that control the terminal window directly, so need to explore that. Got some initial ideas down for the Map class.
 
 ### 7/16/2024
 Created project files and git repository.
