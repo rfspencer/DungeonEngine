@@ -47,6 +47,11 @@ Ok, so we both know this is going to be a fuck-ton of work to do what I have in 
 *Not MVP
 
 ### Implementation Notes
+#### Core
+Isolate Core systems from the Game system. Core systems as a static library that the game loads.
+
+EntryPoint::Main creates the Application
+
 #### Menu
 Menu system. Main menu: new game, load game, quit.
 
@@ -57,7 +62,8 @@ Make a 2D vector array for the total map, each holding a pointer to their map no
 
 File format: file lines represent map rows, and tab seperated columns for map columns. Each tab encapsulated map tile will have a series of comma seperated values that hold the map tile's information. Initial column layout may be:
 ```angular2html
-string TILE_ID, bool HAS_TRAP, TrapType TRAP, bool HAS_ENEMY, vector<EnemyType> EnemyList, bool HAS_LOOT, vector<LootItem> LootList
+string TILE_ID, bool HAS_TRAP, TrapType TRAP, bool HAS_ENEMY, vector<EnemyType> EnemyList,
+    bool HAS_LOOT, vector<LootItem> LootList
 
 - TrapType: Struct of trap parameters.
 - vector<EnemyType>: Vector of Enemy pointers.
@@ -66,6 +72,7 @@ string TILE_ID, bool HAS_TRAP, TrapType TRAP, bool HAS_ENEMY, vector<EnemyType> 
 
 The **TILE_ID** parameter is what is used to track the player's location. The Map can pass that location off to the GameState or World, not sure which yet.
 
+Use Windows Console API to draw to the screen. Consider making supporting Mac console.
 
 #### Hero Classes
 - Rogue: Chance to see traps, monsters, loot within a radius. Sneak attack.
