@@ -1,6 +1,52 @@
 ﻿# Journal
 Daily log of work done.
 
+### 7/20/2024
+Got a basic drawing working on the console. I can move the cursor to a specific coordinate in the console window and draw text into the console buffer. Need to make sure I only update if something has changed, and if possible, only updated the cells that have changed. Implemented basic control to only render if we need to, i.e. RenderIsDirty equals true.
+
+```mermaid
+classDiagram
+    direction RL
+    MainMenu -- DungeonGame : LoadWorld()
+    MainMenu <|-- World
+    DungeonLevel <|-- World
+    DungeonLevel -- MainMenu
+    namespace Core{
+        class World{
+            +World()
+            +BeginPlayInternal()
+            +Clean()
+            -BeginPlay()
+    
+            -Application* m_OwningApp
+            -List m_Actors
+            -List m_PendingActors
+            -List m_GameLevel
+            -List m_CurrentLevel
+        }
+    }
+    namespace Game{
+        class DungeonGame{
+            +Game()
+        }
+        class MainMenu{
+            +MainMenu()
+            +BeginPlay()
+            -NewGame()
+            -LoadGame()
+            -QuitGame()
+        }
+        class DungeonLevel{
+            +DungeonLevel()
+            -BeginPlay() override
+            -InitDungeon()
+            -GameOver()
+            -QuitGame()
+        }
+    }
+```
+
+
 ### 7/19/2024
 Today I worked mostly on design and setting up the application/game framework. I'm not going to do any static library linking, instead just going to separate the core logic into a folder to keep it separate from gameplay.
 
@@ -8,32 +54,39 @@ Today I worked mostly on design and setting up the application/game framework. I
 classDiagram
     direction RL
     EntryPoint -- ProjectTwo
-    ProjectTwo -- Game
-    Application <|-- Game
-    EntryPoint : +main()
-    EntryPoint : -Application* App
-    class ProjectTwo{
-        -Application* GetApplication()
+    ProjectTwo -- DungeonGame
+    Application <|-- DungeonGame
+    namespace Game {
+        class ProjectTwo{
+            -Application* GetApplication()
+        }
+        class DungeonGame{
+            +Game()
+        } 
     }
-    class Game{
-        +Game()
+    namespace Core{
+        class EntryPoint{
+            +main()
+            +Application* App
+        }   
+        class Application{
+            -Console m_Window
+            -float m_TickClock
+            -World m_CurrentWorld
+            -World m_PendingWorld
+
+            +Application()
+            +~Application()
+            +Run()
+            +LoadWorld()
+            +GetWindow()
+            +GetWindowSize()
+            +QuitApplication()
+            -Render()
+            -Tick()
+        }
     }
-    class Application{
-        -Console m_Window
-        -float m_TickClock
-        -World m_CurrentWorld
-        -World m_PendingWorld
-        
-        +Application()
-        +~Application()
-        +Run()
-        +LoadWorld()
-        +GetWindow()
-        +GetWindowSize()
-        +QuitApplication()
-        -Render()
-        -Tick()
-    }
+    
 ```
 **EntryPoint::main()** in Core calls **GetApplication()** that is defined in ProjectTwo.cpp (will probably rename that file soon), which creates a Game object on the heap and returns a pointer to EntryPoint which immediately calls **Run()** on the Game. 
 
