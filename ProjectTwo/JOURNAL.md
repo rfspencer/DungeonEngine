@@ -1,5 +1,49 @@
-﻿# Journal
+# Journal
 Daily log of work done.
+
+### 7/21/2024
+Created a Clock class to handle render timings and as a base class for any other timers that might be needed in-game. Created a Types.h files that defines datatypes. Created base Object class that all game objects will inherit from. Currently, it's only assigning a unique id to the object. Created World class that manages the loading, unloading, time management for all objects in the world. Created a Renderer class the handle visual rendering to the console.
+
+```mermaid
+classDiagram
+    direction RL
+    namespace Core {
+        class Clock {
+            +Clock()
+            +float GetElapsed()
+            +void Restart()
+            -Time_T m_Time
+        }
+        class Types {
+            UniquePtr std::unique_ptr
+            SharedPtr std::shared_ptr
+            WeakPtr std::weak_ptr
+            List std::vector
+        }
+        class Object {
+            +Object()
+        }
+        class World {
+            +World()
+            +void BeginPlayInternal()
+            +void TickInternal(float DeltaTime)
+            +Application* GetApplication()
+            -void BeginPlay()
+            -void Tick(float DeltaTime)
+            -Application* m_OwningApp
+            -bool m_bBeginPlay;
+        }
+        class Renderer {
+            
+        }
+    }
+    namespace Game {
+        class DungeonGame {
+            +DungeonGame()
+            -Application* GetApplication()
+        }
+    }
+```
 
 ### 7/20/2024
 Got a basic drawing working on the console. I can move the cursor to a specific coordinate in the console window and draw text into the console buffer. Need to make sure I only update if something has changed, and if possible, only updated the cells that have changed. Implemented basic control to only render if we need to, i.e. RenderIsDirty equals true.
@@ -27,7 +71,8 @@ classDiagram
     }
     namespace Game{
         class DungeonGame{
-            +Game()
+            +DungeonGame()
+            -Application* GetApplication()
         }
         class MainMenu{
             +MainMenu()
@@ -53,15 +98,12 @@ Today I worked mostly on design and setting up the application/game framework. I
 ```mermaid
 classDiagram
     direction RL
-    EntryPoint -- ProjectTwo
-    ProjectTwo -- DungeonGame
+    EntryPoint -- DungeonGame
     Application <|-- DungeonGame
     namespace Game {
-        class ProjectTwo{
-            -Application* GetApplication()
-        }
         class DungeonGame{
-            +Game()
+            +DungeonGame()
+            -Application* GetApplication()
         } 
     }
     namespace Core{
@@ -88,7 +130,7 @@ classDiagram
     }
     
 ```
-**EntryPoint::main()** in Core calls **GetApplication()** that is defined in ProjectTwo.cpp (will probably rename that file soon), which creates a Game object on the heap and returns a pointer to EntryPoint which immediately calls **Run()** on the Game. 
+**EntryPoint::main()** in Core calls **GetApplication()** that is defined in DungeonGame.cpp (will probably rename that file soon), which creates a Game object on the heap and returns a pointer to EntryPoint which immediately calls **Run()** on the Game. 
 
 
 ### 7/18/2024
