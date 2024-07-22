@@ -94,3 +94,11 @@ void Application::RenderInternal()
     DWORD Length;
     WriteConsoleW(m_ConsoleHandle, m_Title.c_str(), m_Title.length(), nullptr, nullptr);*/
 }
+
+void Application::Render()
+{
+}
+
+void Application::Tick()
+{
+}
