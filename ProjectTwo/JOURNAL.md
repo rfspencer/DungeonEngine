@@ -1,6 +1,53 @@
 # Journal
 Daily log of work done.
 
+### 7/24/2024
+
+#### Working some problems
+##### Render Pipeline
+Need to figure out the render pipeline and how to get the Actor's display properties up to the Renderer to be displayed in the console.
+
+Step back a second... the way we draw in the console is to first define the render space size as a 2D grid, then move the cursor to a location on the grid with a coordinate (x, y), use std::cout to print a character to the console. That's really all that's involved in writing characters to the console.
+
+Since I've already set up Tick with a target draw rate of 60 fps, I can cache all the draw calls from the game objects in the world into a 2D display buffer that fills up as much as it can in 1/60 of a second, then draws it all in one go. The display buffer would be a representation of the console display and each Actor passes their Render parameters off for the Renderer to handle. 
+
+The Renderer should define the window size and use that to view only the part of the World that is within the bounds of the Render view. So if the World is 200x100 tiles and the Render view is 80x30 we only see that section. This might be a nice-to-have as I can see moving the Render view could be complex. Do it if you have time.
+
+So the Actor holds the character that represents it.
+- `.` : empty tile
+- `#` : corridor
+- `@` : player
+- `$` : pile of gold
+- `!` : potion
+- `^` : trap
+- `a-z, A-Z` : monsters
+
+The Actor should track if its state has changed this frame and needs to re-render. Actors should have a MarkRenderDirty() function to call at the end of anything that changes the Actor's display state.
+
+So the pipeline would be:
+- (Application)
+  - End of Run loop call RenderInternal()
+  - RenderInternal clears the screen
+  - Calls Render()
+  - Render calls Render() on the current World
+- (World)
+  - World::Render loops over the Actors in the world
+    - Calls Render() on each Actor
+  - World renders the HUD/UI
+    - . 
+- (Actor)
+  - Actor::Render returns if IsPendingDestroy or !IsRenderable
+  - Actor calls Draw on the Renderer, adding itself with a payload (location, character, color) to the Render buffer
+- (Application)
+  - Calls Dispaly on the Renderer which writes the buffer to the console
+- (Renderer)
+  - iterates through the 2D buffer and either draws each character in sequence, or find a way to draw the buffer at once
+
+##### Input
+I don't think std::cin is going to work. Looks like Windows console has a library in the Standard C++ Library called conio.h that includes methods to fetch input from the console. I think this is the way to poll user input every frame.
+
+
+
 ### 7/21/2024
 Created a Clock class to handle render timings and as a base class for any other timers that might be needed in-game. Created a Types.h files that defines datatypes. Created base Object class that all game objects will inherit from. Currently, it's only assigning a unique id to the object. Created World class that manages the loading, unloading, time management for all objects in the world. Created a Renderer class the handle visual rendering to the console.
 
