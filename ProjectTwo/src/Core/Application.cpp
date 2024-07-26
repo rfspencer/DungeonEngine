@@ -1,10 +1,11 @@
-﻿#include "Application.h"
+﻿#include "Core/Application.h"
 
 #include <iomanip>
 #include <iostream>
-#include <ostream>
 
-Application::Application(const short InWindowWidth, const short InWindowHeight, const std::wstring& InTitle)
+#include "Core/Input.h"
+
+Application::Application(const int InWindowWidth, const int InWindowHeight, const std::wstring& InTitle)
     : m_WindowWidth(InWindowWidth), m_WindowHeight(InWindowHeight), m_Title(InTitle),
         m_TargetFrameRate(60.f), m_TickClock(), m_CurrentWorld(nullptr), m_PendingWorld(nullptr), m_bRenderIsDirty(true)
 {
@@ -12,14 +13,20 @@ Application::Application(const short InWindowWidth, const short InWindowHeight, 
 
 void Application::Run()
 {
+    // Create the renderer and initialize
+    UniquePtr<Renderer> Console(new Renderer());
+    Console->Init(m_Title);
+
+    // Reset and start the TickClock
     m_TickClock.Restart();
     float AccumulatedTime = 0.f;
     float TargetDeltaTime = 1.f / m_TargetFrameRate;
     
     bool bAppRunning = true;
     while (bAppRunning)
-    {
+    {        
         // Poll input events
+        ProcessInput();
         
         // Dispatch events
         
@@ -32,7 +39,7 @@ void Application::Run()
         {
             AccumulatedTime -= TargetDeltaTime;
             TickInternal(TargetDeltaTime);
-            RenderInternal();
+            RenderInternal(*Console);
         }
     }
 }
@@ -54,49 +61,26 @@ void Application::TickInternal(float DeltaTime)
     }
 }
 
-void Application::RenderInternal()
+void Application::RenderInternal(Renderer& InRendererRef)
 {
-    // Clear Screen buffer
+    // Clear Screen buffer, Windows only
+    // InRendererRef.ClearConsoleScreen();
 
-    // Render()
+    // Populate the render buffer
+    Render(InRendererRef);
 
     // Display buffer
-    
-    
-    //m_bRenderIsDirty = false;
-    
-    /*// Get the console handle
-    m_ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    // Set cursor properties
-    CONSOLE_CURSOR_INFO ConCurInfo;
-    ConCurInfo.dwSize = 10;
-    ConCurInfo.bVisible = false;
-    SetConsoleCursorInfo(m_ConsoleHandle, &ConCurInfo);
-    
-    // Set the console window size
-    m_ConsoleBufferSize = {m_WindowWidth, m_WindowHeight};
-    SetConsoleScreenBufferSize(m_ConsoleHandle, m_ConsoleBufferSize);
-    
-    // Get the console screen buffer info
-    CONSOLE_SCREEN_BUFFER_INFO CSBI;
-    GetConsoleScreenBufferInfo(m_ConsoleHandle, &CSBI);
-
-    // Calculate the position to center the text, screen width and height from CSBI
-    COORD CursorPosition;
-    CursorPosition.X = (CSBI.dwSize.X - m_Title.length()) / 2;
-    CursorPosition.Y = CSBI.dwSize.Y / 2;
-
-    // Set cursor position
-    SetConsoleCursorPosition(m_ConsoleHandle, CursorPosition);
-
-    // Write the text to the console
-    DWORD Length;
-    WriteConsoleW(m_ConsoleHandle, m_Title.c_str(), m_Title.length(), nullptr, nullptr);*/
+    InRendererRef.DisplayRenderBuffer();
 }
 
-void Application::Render()
+void Application::Render(Renderer& InRendererRef)
 {
+    m_CurrentWorld->Render(InRendererRef);
+}
+
+void Application::ProcessInput()
+{
+    Input::Update();
 }
 
 void Application::Tick()

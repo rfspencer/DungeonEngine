@@ -2,16 +2,16 @@
 
 #include <string>
 
-#include "Clock.h"
-#include "Types.h"
-#include "Windows.h"
-#include "World.h"
+#include "Core/Clock.h"
+#include "Core/Renderer.h"
+#include "Core/Types.h"
+#include "Core/World.h"
 
 class Application
 {
 public:
     Application() = default;
-    Application(short InWindowWidth, short InWindowHeight, const std::wstring& InTitle);
+    Application(const int InWindowWidth, const int InWindowHeight, const std::wstring& InTitle);
 
     void Run();
 
@@ -20,17 +20,16 @@ public:
 
     void SetRenderIsDirty(const bool bRenderIsDirty) { m_bRenderIsDirty = bRenderIsDirty; }
 
-private:
+private:    
     void TickInternal(float DeltaTime);
-    void RenderInternal();
+    void RenderInternal(Renderer& InRendererRef);
 
-    virtual void Render();
+    virtual void Render(Renderer& InRendererRef);
     virtual void Tick();
     
+    void ProcessInput();
+    
 private:
-    HANDLE m_ConsoleHandle;
-    COORD m_ConsoleBufferSize;
-
     short m_WindowWidth;
     short m_WindowHeight;
     std::wstring m_Title;
