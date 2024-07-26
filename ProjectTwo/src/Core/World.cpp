@@ -1,10 +1,11 @@
-#include "Core/World.h"
+﻿#include "Core/World.h"
 
+#include "Core/Actor.h"
 #include "Core/Widgets/HUD.h"
 
 
 World::World(Application* OwningApp)
-    : m_OwningApp(OwningApp), m_bBeginPlay(false)
+    : m_OwningApp(OwningApp), m_bBeginPlay(false), m_Actors(), m_PendingActors()
 {
 }
 
@@ -14,18 +15,33 @@ void World::BeginPlayInternal()
     {
         m_bBeginPlay = true;
         BeginPlay();
-        
     }
 }
 
 void World::TickInternal(float DeltaTime)
 {
+    for(const SharedPtr<Actor>& Actor : m_PendingActors)
+    {
+        m_Actors.push_back(Actor);
+        Actor->BeginPlayInternal();
+    }
+    m_PendingActors.clear();
+
+    for (auto Iter = m_Actors.begin(); Iter != m_Actors.end();)
+    {
+        Iter->get()->TickInternal(DeltaTime);
+        ++Iter;
+    }
     
     Tick(DeltaTime);
 }
 
 void World::Render(Renderer& InRendererRef)
 {
+    for (const auto& Actor : m_Actors)
+    {
+        Actor->Render(InRendererRef);
+    }
     RenderHUD(InRendererRef);
 }
 

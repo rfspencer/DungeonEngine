@@ -1,8 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include "Core/Object.h"
 #include "Core/Types.h"
 
+class Actor;
 class Application;
 class HUD;
 class Renderer;
@@ -14,8 +15,12 @@ public:
     
     void BeginPlayInternal();
     void TickInternal(float DeltaTime);
+    void Render(Renderer& InRendererRef);
 
     virtual ~World();
+
+    template<typename ActorType, typename... Args>
+    WeakPtr<ActorType> SpawnActor(Args... InArgs);
 
     template<typename HUDType, typename... Args>
     WeakPtr<HUDType> SpawnHUD(Args... InArgs);
@@ -32,12 +37,21 @@ private:
 private:
     Application* m_OwningApp;
     bool m_bBeginPlay;
-    
-};
+
+    List<SharedPtr<Actor>> m_Actors;
+    List<SharedPtr<Actor>> m_PendingActors;
 
     SharedPtr<HUD> m_HUD;
     
 };
+
+template<typename ActorType, typename... Args>
+WeakPtr<ActorType> World::SpawnActor(Args... InArgs)
+{
+    SharedPtr<ActorType> NewActor{ new ActorType(this, InArgs...) };
+    m_PendingActors.push_back(NewActor);
+    return NewActor;
+}
 
 template<typename HUDType, typename... Args>
 WeakPtr<HUDType> World::SpawnHUD(Args... InArgs)
