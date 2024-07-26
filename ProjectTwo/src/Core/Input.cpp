@@ -2,6 +2,9 @@
 
 #include <conio.h>
 
+int Input::m_KeyDown = 0;
+std::vector<std::function<void(int)>> Input::m_InputListeners;
+
 void Input::Update()
 {
     if (_kbhit())
