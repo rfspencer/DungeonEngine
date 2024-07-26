@@ -1,15 +1,16 @@
 ﻿#include "MainMenuLevel.h"
-#include <iostream>
+
+#include "Widgets/MainMenuHUD.h"
 
 MainMenuLevel::MainMenuLevel(Application* OwningApp)
     : World(OwningApp)
 {
+    m_MainMenuHUD = SpawnHUD<MainMenuHUD>();
 }
 
 void MainMenuLevel::BeginPlay()
 {
-    std::cout << "Dungeon Crawler" << std::endl << std:: endl;
-    std::cout << "Main Menu" << std::endl;
+    
 }
 
 void MainMenuLevel::Tick(float DeltaTime)

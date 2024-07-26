@@ -2,6 +2,8 @@
 
 #include "World.h"
 
+class MainMenuHUD;
+
 class MainMenuLevel : public World
 {
 public:
@@ -12,5 +14,6 @@ public:
 private:
     void StartGame();
     void QuitGame();
-    
+
+    WeakPtr<MainMenuHUD> m_MainMenuHUD;
 };
