@@ -1,5 +1,181 @@
-# Journal
+﻿# Journal
 Daily log of work done.
+- Load the map
+- Load assets for the map
+- Place the assets on the map
+- Place the player at player start
+
+### 7/26/2024
+
+
+#### Class Diagram
+```mermaid
+---
+title: Dungeon Crawler
+---
+classDiagram
+direction TD
+    World <|-- Object
+    Actor <|-- Object
+    Widget <|-- Object
+    TextWidget <|-- Widget
+    HUD <|-- Object
+    MainMenuHUD <|-- HUD
+    MainMenuLevel <|-- World
+    DungeonGame <|-- Application
+    namespace Game {
+        class DungeonGame {
+            +DungeonGame(int, int, std::wstring&)
+            +GetApplication() Application*
+        }
+        class MainMenuHUD {
+            +MainMenuHUD()
+            +Render(Renderer&) void
+            +HandleEvent() bool
+            -Init() void
+            -m_MainMenuLayout TextWidget
+            -m_MenuTitleText TextWidget
+            -m_NewGameText TextWidget
+            -m_QuitGameText TextWidget
+        }
+        class MainMenuLevel {
+            +MainMenuLevel(Application*)
+            +BeginPlay() void
+            +Tick(float) void
+            -StartGame() void
+            -QuitGame() void
+            -m_MainMenuHUD WeakPtr~MainMenuHUD~
+        }
+    }
+    namespace Core {
+        class Application {
+            +Application(int, int, std::string&)
+            +Run() void
+            +LoadWorld WeakPtr~WorldType~
+            +SetRenderIsDirty(bool) void
+            -TickInternal(float) void
+            -RenderInternal(Renderer&) void
+            -Render(Rendrer&) void
+            -Tick(float) void
+            -ProcessInput() void
+            -short m_WindowWidth
+            -short m_WindowHeight
+            -std::string m_Title
+            -float m_TargetFrameRate;
+            -Clock m_TickClock
+            -SharedPtr~World~ m_CurrentWorld
+            -SharedPtr~World~ m_PendingWorld
+            -bool m_bRenderIsDirty
+        }
+        class Object {
+            +Object()
+            +~Object()
+            +Destroy() void
+            +IsPendingDestroy() bool
+            +GetWeakRef() WeakPtr~Object~
+            +GetUniqueID() int
+            -uint m_UniqueID
+            -bool m_IsPendingDestroy
+        }
+        class Actor {
+            +Actor()
+            +~Actor()
+            +BeginPlayInternal() void
+            +TickInternal(float) void
+            +BeginPlay() void
+            +Tick(float) void
+            +Render(Renderer&) void
+            +SetActorLocation(Vector2i) void
+            +GetActorLocation() Vector2i
+            +GetWorld() World*
+            +Destroy() void
+            +ApplyDamage() void
+            +GetSprite() std::string&
+            -World* m_OwningWorld
+            -bool m_HasBeganPlay
+            -bool m_IsRenderable
+            -std::string m_Sprite
+            -int m_OverrideColor
+            -Transform m_Transform
+        }
+        class World {
+            +World()
+            +~World()
+            +BeginPlayInternal() void
+            +TickInternal(float) void
+            +Render(Renderer) void
+            +SpawnActor() WeakPtr<Actor>
+            +SpawnHUD() WeakPtr<HUD>
+            +GetApplication() Application*
+            -BeginPlay() void
+            -Tick(float) void
+            -RenderHUD(Renderer&) void
+            -Application* m_OwningApp
+            -bool m_bBeginPlay
+            -List<SharedPtr<Actor>> m_Actors
+            -List<SharedPtr<Actor>> m_PendingActors
+            -SharedPtr<HUD> m_HUD;
+        }
+        class Renderer {
+            +Renderer()
+            +Init(std::wstring) void
+            +ClearConsoleScreen() void
+            +DrawObject(Object&) void
+            +DrawUI(Widet&, Vector2i) void
+            +DisplayRenderBuffer() void
+            -FixConsoleWindow() void
+            -HideCursor() void
+            -GoToXY(int, int) void
+            -AddElementToRenderBuffer(CHAR_INFO, Vector2i) void
+            -SetConsoleColor(int) void
+            -m_RenderBuffer std::array<CHAR_INFO>
+        }
+        class HUD {
+            +Render(Renderer&) void
+            +InitInternal() void
+            +HasInit() bool
+            +HandleEvent() bool
+            +Tick() void
+            #HUD()
+            -Init() void
+            -m_HasInit bool
+        }
+        class Widget {
+            +RenderInternal(Renderer&) void
+            +SetWidgetPosition(Vector2i) void
+            +GetWidgetPosition() Vector2i
+            +SetVisibility(bool) void
+            +GetVisibility() bool
+            +SetDoesNeedUpdate(bool) void
+            +GetDoesNeedUpdate() bool
+            #Widget()
+            -Render(Renderer&) void
+            -LocationUpdated(Vector2i) void
+            -Transform m_WidgetTransform
+            -bool m_IsVisisble
+            -bool m_DoesNeedUpdate
+        }
+        class TextWidget {
+            +TextWidget()
+            +TedtWidget(std::string&)
+            +SetText(std::string&) void
+            +GetText() std::string
+            -Render(Renderer&) void
+            -std::string m_Text
+        }
+        class Input {
+            +Input()
+            +Update() void$
+            +GetKeyDown() int$
+            +AddListener() void$
+            +RemoveListener() void$
+            +CleanUp() void$
+            -m_KeyDown int$
+            -m_InputListeners std::vector~std::function~$
+        }
+    }
+```
+
 
 ### 7/25/2024
 
