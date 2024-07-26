@@ -1,4 +1,6 @@
-﻿#include "World.h"
+#include "Core/World.h"
+
+#include "Core/Widgets/HUD.h"
 
 
 World::World(Application* OwningApp)
@@ -18,7 +20,17 @@ void World::BeginPlayInternal()
 
 void World::TickInternal(float DeltaTime)
 {
+    
     Tick(DeltaTime);
+}
+
+void World::Render(Renderer& InRendererRef)
+{
+    RenderHUD(InRendererRef);
+}
+
+World::~World()
+{
 }
 
 void World::BeginPlay()
@@ -27,4 +39,12 @@ void World::BeginPlay()
 
 void World::Tick(float DeltaTime)
 {
+}
+
+void World::RenderHUD(Renderer& InRendererRef)
+{
+    if(m_HUD)
+    {
+        m_HUD->Render(InRendererRef);
+    }
 }
