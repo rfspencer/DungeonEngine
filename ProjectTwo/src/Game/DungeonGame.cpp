@@ -5,15 +5,12 @@
 #include <Core.h>
 
 #include "MainMenuLevel.h"
-
-const std::wstring GAME_NAME = L"Dungeon Crawler";
-constexpr short WINDOW_WIDTH = 90;
-constexpr short WINDOW_HEIGHT = 15;
+#include "Game/Utilities/Constants.h"
 
 class DungeonGame : public Application
 {
 public:
-    DungeonGame(short InWindowWidth, short InWindowHeight, const std::wstring& InTitle)
+    DungeonGame(int InWindowWidth, int InWindowHeight, const std::wstring& InTitle)
         : Application(InWindowWidth, InWindowHeight, InTitle)
     {
         // Load Asset Manager
