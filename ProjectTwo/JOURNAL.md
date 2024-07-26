@@ -1,6 +1,35 @@
 # Journal
 Daily log of work done.
 
+### 7/25/2024
+
+Did a ton today. Created a base class for UI Widgets and derived a `TextWidget` class from `Widget` base class. Created a virtual `HUD` base class to manage UI functionality and derived `MainMenuHUD`, implemented a basic main menu. And by basic I mean non-functional, just for looks at the moment. Input will be finished tomorrow. Updated the MainMenuLevel to spawn the MainMenuHUD to draw the main menu. Added a Constants header file to hold game-specific constants, specifically for the screen width and height.
+
+Created a `Vector2i` helper class for 2D integer Vectors to help with positioning elements on the screen. Also added a `Transform` class to hold all the transform data for game objects. Currently, it only holds position, but I plan on extending it to scale to account for larger objects and UI elements. 
+
+A big step forward was finishing the base implementation of the `Renderer` class which holds a render buffer in memory until the frame is complete at which point it draws the buffer to the console screen. 
+
+Added an `Actor` class, derived from `Object`, to represent any game object that can be displayed on the screen. Updated the `World` class to hold a pointer to all Actors in the World and the ability to spawn actors into the World.
+
+Updated the `Application` and `DungeonGame` classes to implement the `Renderer`.
+
+#### Working some problems
+Still left to do...
+##### Movement
+Input is polled every frame and if any of the movement keys are pressed (W, A, S, D or arrow keys), the players token moves one tile in that direction if it is allowed to. To keep things simple, all Game Objects are blocking objects, meaning you can't move into a tile that's occupied.
+
+##### Interaction
+If an object is interactable. Open doors. Pick up items.
+Within a radius if 1 tile, interaction HUD pops up.
+
+##### Player
+Classes: Warrior, mage, rouge.
+Inventory:
+
+##### Map
+Map is loaded from file. World reads the map and spawns in required game objects.
+
+
 ### 7/24/2024
 
 #### Working some problems
