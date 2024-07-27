@@ -37,6 +37,13 @@ void Renderer::ClearConsoleScreen()
     // Fill the entire buffer with spaces
     if (!FillConsoleOutputCharacter(OutputHandle, (TCHAR)' ', CellCount, {0,0}, &Count)) return;
     if (!FillConsoleOutputAttribute(OutputHandle, CSBI.wAttributes, CellCount, {0,0}, &Count)) return;
+
+    // Clear the Render buffer
+    CHAR_INFO Sprite;
+    Sprite.Char.UnicodeChar = ' ';
+    Sprite.Attributes = 0x0E; // Yellow color in decimal
+    m_RenderBuffer.fill(Sprite);
+    
     // Move cursor home
     SetConsoleCursorPosition(OutputHandle, {0,0});
 }

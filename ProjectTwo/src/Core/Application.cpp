@@ -15,8 +15,8 @@ Application::Application(const int InWindowWidth, const int InWindowHeight, cons
 void Application::Run()
 {
     // Create the renderer and initialize
-    UniquePtr<Renderer> Console(new Renderer());
-    Console->Init(m_Title);
+    m_Renderer = std::make_unique<Renderer>();
+    m_Renderer->Init(m_Title);
 
     // Reset and start the TickClock
     m_TickClock.Restart();
@@ -40,15 +40,13 @@ void Application::Run()
         {
             AccumulatedTime -= TargetDeltaTime;
             TickInternal(TargetDeltaTime);
-            RenderInternal(*Console);
+            RenderInternal(*m_Renderer);
         }
     }
 }
 
 void Application::TickInternal(float DeltaTime)
 {
-    // std::cout << "Ticking...DeltaTime: " << std::fixed << std::setprecision(9) << DeltaTime << std::endl;
-
     if (m_CurrentWorld)
     {
         m_CurrentWorld->TickInternal(DeltaTime);

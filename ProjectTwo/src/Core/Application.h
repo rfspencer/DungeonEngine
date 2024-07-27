@@ -22,6 +22,9 @@ public:
 
     void SetRenderIsDirty(const bool bRenderIsDirty) { m_bRenderIsDirty = bRenderIsDirty; }
 
+    // Getter for Renderer that returns a reference to the Renderer
+    Renderer& GetRendererRef() const { return *(m_Renderer.get()); }
+    
     void QuitApplication();
 
 private:    
@@ -43,7 +46,8 @@ private:
 
     SharedPtr<World> m_CurrentWorld;
     SharedPtr<World> m_PendingWorld;
-    
+
+    UniquePtr<Renderer> m_Renderer;
     bool m_bRenderIsDirty;
 };
 

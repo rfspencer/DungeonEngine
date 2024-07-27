@@ -1,9 +1,9 @@
 ﻿#include "MainMenuLevel.h"
 
-#include "Application.h"
-#include "Input.h"
-#include "Player.h"
-#include "Widgets/MainMenuHUD.h"
+#include "Core/Application.h"
+#include "Core/Input.h"
+#include "Game/Levels/DungeonLevel.h"
+#include "Game/Widgets/MainMenuHUD.h"
 
 MainMenuLevel::MainMenuLevel(Application* OwningApp)
     : World(OwningApp)
@@ -39,10 +39,11 @@ void MainMenuLevel::RemoveListenerForInput() const
     Input::RemoveListener(m_InputEvent);
 }
 
-void MainMenuLevel::StartGame() const
+void MainMenuLevel::StartGame()
 {
+    GetApplication()->GetRendererRef().ClearConsoleScreen();
     RemoveListenerForInput();
-    GetApplication()
+    GetApplication()->LoadWorld<DungeonLevel>();
 }
 
 void MainMenuLevel::QuitGame()
