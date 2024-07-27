@@ -81,21 +81,24 @@ void Renderer::DrawObject(const Object& InObject)
     // Actor calls this to add itself to a location in the Render buffer
 }
 
-void Renderer::DrawUI(Widget& InWidget, Vector2i InPosition)
+void Renderer::DrawUI(Widget& InWidget, Vector2i InPosition, bool bIsMultiLine)
 {
     // TODO: Need to setup a Delegate system for the UI so the UI can update when game state changes
     // If we're trying to draw a TextWidget
     if(TextWidget* Text = dynamic_cast<TextWidget*>(&InWidget))
     {
-        size_t Length = Text->GetText().length();
-        for(size_t i = 0; i < Text->GetText().length(); ++i)
-        {
+        std::string TempStr = Text->GetText();
+        for(size_t i = 0; i < TempStr.length(); ++i)
+        {                
             CHAR_INFO Sprite;
             Sprite.Char.UnicodeChar = Text->GetText().at(i);
             Sprite.Attributes = 0x0E; // Yellow color in decimal
             Vector2i Position = Text->GetWidgetPosition();
             Position.X += static_cast<int>(i);
-
+            if (bIsMultiLine && TempStr.at(i) == '\n')
+            {
+                Position.Y = TempStr.length() % (WINDOW_WIDTH + 1);
+            }
             AddElementToRenderBuffer(Sprite, Position);
         }
     }
