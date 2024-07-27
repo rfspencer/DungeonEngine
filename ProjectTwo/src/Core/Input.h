@@ -3,6 +3,8 @@
 #include <functional>
 #include <vector>
 
+#include "Types.h"
+
 class Input
 {
 public:
@@ -15,6 +17,8 @@ public:
     static void CleanUp() { m_InputListeners.clear(); }
 
 private:
+    // The currently pressed key. 0 if no keys are pressed.
     static int m_KeyDown;
-    static std::vector<std::function<void(int)>> m_InputListeners;
+
+    static List<std::function<void(int)>> m_InputListeners;
 };

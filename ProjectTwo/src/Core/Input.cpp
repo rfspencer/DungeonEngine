@@ -3,7 +3,7 @@
 #include <conio.h>
 
 int Input::m_KeyDown = 0;
-std::vector<std::function<void(int)>> Input::m_InputListeners;
+List<std::function<void(int)>> Input::m_InputListeners;
 
 void Input::Update()
 {
@@ -35,10 +35,11 @@ void Input::AddListener(std::function<void(int Input)> Callback)
 
 void Input::RemoveListener(std::function<void(int Input)> Callback)
 {
-    auto it = std::remove_if(m_InputListeners.begin(), m_InputListeners.end(), [Callback](const auto& Listener)
+    auto It = std::remove_if(m_InputListeners.begin(), m_InputListeners.end(), [Callback](const auto& Listener)
     {
-       return Listener.target_type() == Callback.target_type(); 
+        return Listener.target_type() == Callback.target_type();
     });
-    m_InputListeners.erase(it, m_InputListeners.end());
+    m_InputListeners.erase(It, m_InputListeners.end());
 }
+
 
