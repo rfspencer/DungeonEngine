@@ -1,5 +1,8 @@
 ﻿#include "MainMenuLevel.h"
 
+#include "Application.h"
+#include "Input.h"
+#include "Player.h"
 #include "Widgets/MainMenuHUD.h"
 
 MainMenuLevel::MainMenuLevel(Application* OwningApp)
@@ -10,18 +13,38 @@ MainMenuLevel::MainMenuLevel(Application* OwningApp)
 
 void MainMenuLevel::BeginPlay()
 {
-    
+    // UniquePtr<Player> NewPlayer = std::make_unique<Player>();
+    m_InputEvent = std::bind(&MainMenuLevel::HandleInput, this, std::placeholders::_1);
+    Input::AddListener(m_InputEvent);
 }
 
 void MainMenuLevel::Tick(float DeltaTime)
 {
-    // Poll input for menu selection
 }
 
-void MainMenuLevel::StartGame()
+void MainMenuLevel::HandleInput(int InKeyPressed)
 {
+    if (tolower(InKeyPressed) == 'q')
+    {
+        QuitGame();
+    }
+    if (tolower(InKeyPressed) == 'n')
+    {
+        StartGame();
+    }
+}
+
+void MainMenuLevel::RemoveListenerForInput() const
+{
+    Input::RemoveListener(m_InputEvent);
+}
+
+void MainMenuLevel::StartGame() const
+{
+    RemoveListenerForInput();
 }
 
 void MainMenuLevel::QuitGame()
 {
+    GetApplication()->QuitApplication();
 }

@@ -9,8 +9,8 @@ const char* DATA_MAINMENU_LAYOUT_PATH = "src/Game/Data/MainMenu.layout";
 
 MainMenuHUD::MainMenuHUD()
     : m_MenuTitleText("Main Menu"),
-      m_NewGameText("- New Game"),
-      m_QuitGameText("- Quit")
+      m_NewGameText("N: New Game"),
+      m_QuitGameText("Q: Quit")
 {
     Init();
 }
