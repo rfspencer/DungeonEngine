@@ -2,7 +2,8 @@
 
 #include <memory>
 
-#include "Types.h"
+#include "Core/Delegate.h"
+#include "Core/Types.h"
 
 /**
  * Object class for all game objects to derive from.
