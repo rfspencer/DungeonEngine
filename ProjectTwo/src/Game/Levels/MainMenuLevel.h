@@ -16,7 +16,7 @@ public:
 private:
     void HandleInput(int InKeyPressed);
     
-    void StartGame() const;
+    void StartGame();
     void QuitGame();
 
     WeakPtr<MainMenuHUD> m_MainMenuHUD;
