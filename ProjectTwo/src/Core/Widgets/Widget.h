@@ -9,7 +9,7 @@ class Renderer;
 class Widget : Object
 {
 public:
-    void RenderInternal(Renderer& InRendererRef);
+    void RenderInternal(Renderer& InRendererRef, bool bIsMultiLine = false);
 
     void SetWidgetPosition(Vector2i InNewLocation);
     void SetWidgetPosition(int InX, int InY);
@@ -25,7 +25,7 @@ protected:
     Widget();
     
 private:
-    virtual void Render(Renderer& InRendererRef);
+    virtual void Render(Renderer& InRendererRef, bool bIsMultiLine = false);
     virtual void LocationUpdated(const Vector2i InNewLocation);
 
     Transform m_WidgetTransform;

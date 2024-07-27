@@ -15,8 +15,8 @@ void TextWidget::SetText(const std::string& InString)
     SetDoesNeedUpdate(true);
 }
 
-void TextWidget::Render(Renderer& InRendererRef)
+void TextWidget::Render(Renderer& InRendererRef, bool bIsMultiLine)
 {
-    InRendererRef.DrawUI(*this, GetWidgetPosition());
+    InRendererRef.DrawUI(*this, GetWidgetPosition(), bIsMultiLine);
     SetDoesNeedUpdate(false);
 }

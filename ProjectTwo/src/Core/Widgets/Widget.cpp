@@ -5,11 +5,11 @@ Widget::Widget()
 {
 }
 
-void Widget::RenderInternal(Renderer& InRendererRef)
+void Widget::RenderInternal(Renderer& InRendererRef, bool bIsMultiLine)
 {
     if(m_IsVisible && GetDoesNeedUpdate())
     {
-        Render(InRendererRef);
+        Render(InRendererRef, bIsMultiLine);
     }
 }
 
@@ -33,7 +33,7 @@ void Widget::SetVisibility(bool InNewVisibility)
     SetDoesNeedUpdate(true);
 }
 
-void Widget::Render(Renderer& InRendererRef)
+void Widget::Render(Renderer& InRendererRef, bool bIsMultiLine)
 {
 }
 

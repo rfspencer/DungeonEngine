@@ -14,7 +14,7 @@ public:
     std::string GetText() { return m_Text; }
 
 private:
-    void Render(Renderer& InRendererRef) override;
+    void Render(Renderer& InRendererRef, bool bIsMultiLine = false) override;
 
     std::string m_Text;
 };
