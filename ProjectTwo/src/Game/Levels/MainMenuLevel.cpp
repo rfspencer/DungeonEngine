@@ -42,6 +42,7 @@ void MainMenuLevel::RemoveListenerForInput() const
 void MainMenuLevel::StartGame() const
 {
     RemoveListenerForInput();
+    GetApplication()
 }
 
 void MainMenuLevel::QuitGame()

@@ -4,7 +4,7 @@
 
 #include <Core.h>
 
-#include "MainMenuLevel.h"
+#include "Game/Levels/MainMenuLevel.h"
 #include "Game/Utilities/Constants.h"
 
 class DungeonGame : public Application
