@@ -110,6 +110,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,6 +162,7 @@
     <ClCompile Include="src\Core\Input.cpp" />
     <ClCompile Include="src\Core\Object.cpp" />
     <ClCompile Include="src\Core\Renderer.cpp" />
+    <ClCompile Include="src\Core\Utilities\FileHandler.cpp" />
     <ClCompile Include="src\Core\Widgets\HUD.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -325,6 +327,7 @@
     <ClInclude Include="src\Core\Object.h" />
     <ClInclude Include="src\Core\Renderer.h" />
     <ClInclude Include="src\Core\Types.h" />
+    <ClInclude Include="src\Core\Utilities\FileHandler.h" />
     <ClInclude Include="src\Core\Utilities\Transform.h" />
     <ClInclude Include="src\Core\Utilities\Vector2i.h" />
     <ClInclude Include="src\Core\Widgets\HUD.h" />
