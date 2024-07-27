@@ -14,7 +14,7 @@ public:
 private:
     void Init() override;
 
-    TextWidget m_MainMenuLayout;
+    TextWidget m_MainMenuBackground;
     TextWidget m_MenuTitleText;
     TextWidget m_NewGameText;
     TextWidget m_QuitGameText;
