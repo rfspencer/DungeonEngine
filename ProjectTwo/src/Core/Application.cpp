@@ -2,6 +2,7 @@
 
 #include <iomanip>
 #include <iostream>
+#include <memory>
 
 #include "Core/Input.h"
 
@@ -85,4 +86,9 @@ void Application::ProcessInput()
 
 void Application::Tick()
 {
+}
+
+void Application::QuitApplication()
+{
+    ExitProcess(0);
 }

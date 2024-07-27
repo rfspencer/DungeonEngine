@@ -7,6 +7,8 @@
 #include "Core/Types.h"
 #include "Core/World.h"
 
+class Input;
+
 class Application
 {
 public:
@@ -19,6 +21,8 @@ public:
     WeakPtr<WorldType> LoadWorld();
 
     void SetRenderIsDirty(const bool bRenderIsDirty) { m_bRenderIsDirty = bRenderIsDirty; }
+
+    void QuitApplication();
 
 private:    
     void TickInternal(float DeltaTime);
