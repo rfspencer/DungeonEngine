@@ -161,6 +161,7 @@
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\Delegate.cpp" />
     <ClCompile Include="src\Core\Input.cpp" />
+    <ClCompile Include="src\Core\Map.cpp" />
     <ClCompile Include="src\Core\Object.cpp" />
     <ClCompile Include="src\Core\Renderer.cpp" />
     <ClCompile Include="src\Core\Utilities\FileHandler.cpp" />
@@ -402,6 +403,7 @@
     <ClInclude Include="src\Core\Delegate.h" />
     <ClInclude Include="src\Core\EntryPoint.h" />
     <ClInclude Include="src\Core\Input.h" />
+    <ClInclude Include="src\Core\Map.h" />
     <ClInclude Include="src\Core\Object.h" />
     <ClInclude Include="src\Core\Renderer.h" />
     <ClInclude Include="src\Core\Types.h" />
