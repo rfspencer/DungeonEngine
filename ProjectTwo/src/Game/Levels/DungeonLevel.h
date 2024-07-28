@@ -12,11 +12,8 @@ public:
     void BeginPlay() override;
     void Tick(float DeltaTime) override;
 
-    void RemoveListenerForInput() const;
     
-private:
-    void HandleInput(int InKeyPressed);
-    
+private:    
     void QuitGame();
 
     WeakPtr<Player> m_Player;    

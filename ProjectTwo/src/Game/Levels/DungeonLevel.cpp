@@ -22,14 +22,6 @@ void DungeonLevel::Tick(float DeltaTime)
 {
 }
 
-void DungeonLevel::RemoveListenerForInput() const
-{
-}
-
-void DungeonLevel::HandleInput(int InKeyPressed)
-{
-}
-
 void DungeonLevel::QuitGame()
 {
     GetApplication()->GetRendererRef().ClearConsoleScreen();
