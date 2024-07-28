@@ -13,7 +13,6 @@ MainMenuLevel::MainMenuLevel(Application* OwningApp)
 
 void MainMenuLevel::BeginPlay()
 {
-    // UniquePtr<Player> NewPlayer = std::make_unique<Player>();
     m_InputEvent = std::bind(&MainMenuLevel::HandleInput, this, std::placeholders::_1);
     Input::AddListener(m_InputEvent);
 }
