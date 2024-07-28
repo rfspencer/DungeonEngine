@@ -20,13 +20,8 @@ std::string FileHandler::ReadFile(const char* InPath)
 {
     std::string TempString;
     std::string Line;
-
-    // Set global encoding
-    //std::locale::global(std::locale(""));
     
-    std::ifstream File(InPath, std::ios::binary);
-    // Imbues file stream with global encoding
-    //File.imbue(std::locale());
+    std::ifstream File(InPath);
     if (!File) {
         // Using std::cerr because standard output buffer is rendering application 
         std::cerr << "Unable to open " << InPath << std::endl;
@@ -50,5 +45,20 @@ TextWidget FileHandler::StringToTextWidget(const std::string& InString, bool bLo
         TempWidget.SetText(InString);
     }
     return TempWidget;
+}
+
+std::array<char, WINDOW_WIDTH * WINDOW_HEIGHT> FileHandler::StringToMap(const std::string& InString, bool bLoadAllData)
+{
+    unsigned int TempSize = WINDOW_WIDTH * WINDOW_HEIGHT;
+    std::array<char, WINDOW_WIDTH * WINDOW_HEIGHT> TempArray;
+    if (bLoadAllData)
+    {
+        for (unsigned int i = 0; i < TempSize; ++i)
+        {
+            TempArray[i] = InString.at(i);
+        }
+        return TempArray;
+    }
+    return TempArray;
 }
 
