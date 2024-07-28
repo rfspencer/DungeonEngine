@@ -1,6 +1,7 @@
 ﻿#include "FileHandler.h"
 
-#include "Widgets/TextWidget.h"
+#include "Core/Widgets/TextWidget.h"
+#include "Game/Utilities/Constants.h"
 
 #include <fstream>
 #include <iostream>
@@ -47,13 +48,12 @@ TextWidget FileHandler::StringToTextWidget(const std::string& InString, bool bLo
     return TempWidget;
 }
 
-std::array<char, WINDOW_WIDTH * WINDOW_HEIGHT> FileHandler::StringToMap(const std::string& InString, bool bLoadAllData)
+std::array<char, RENDER_BUFFER_SIZE> FileHandler::StringToMap(const std::string& InString, bool bLoadAllData)
 {
-    unsigned int TempSize = WINDOW_WIDTH * WINDOW_HEIGHT;
-    std::array<char, WINDOW_WIDTH * WINDOW_HEIGHT> TempArray;
+    std::array<char, RENDER_BUFFER_SIZE> TempArray;
     if (bLoadAllData)
     {
-        for (unsigned int i = 0; i < TempSize; ++i)
+        for (unsigned int i = 0; i < RENDER_BUFFER_SIZE; ++i)
         {
             TempArray[i] = InString.at(i);
         }

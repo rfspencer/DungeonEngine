@@ -58,5 +58,5 @@ public:
      *
      * @return Map populated with string data.
      */
-    static std::array<char, WINDOW_WIDTH * WINDOW_HEIGHT> StringToMap(const std::string& InString, bool bLoadAllData = true);
+    static std::array<char, RENDER_BUFFER_SIZE> StringToMap(const std::string& InString, bool bLoadAllData = true);
 };
