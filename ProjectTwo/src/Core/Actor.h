@@ -25,6 +25,9 @@ public:
     void SetActorLocation(const Vector2i InNewLocation);
     Vector2i GetActorLocation() const { return m_Transform.GetPosition(); }
 
+    bool HasMovedThisFrame() const { return m_Transform.HasMovedThisFrame(); }
+    Vector2i GetPreviousPosition() const { return m_Transform.GetPreviousPosition(); }
+
     const World* GetWorld() const { return m_OwningWorld; }
     World* GetWorld() { return m_OwningWorld; }
 
@@ -33,6 +36,10 @@ public:
     virtual void ApplyDamage(float InAmount);
 
     std::string& GetSprite() { return m_Sprite; }
+    void SetSprite(const std::string& InString) { m_Sprite = InString; }
+
+    int GetOverrideColor() const { return m_OverrideColor; }
+    void SetOverrideColor(const int InColor) { m_OverrideColor = InColor; }
 
 private:
     World* m_OwningWorld;
