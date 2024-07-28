@@ -116,12 +116,12 @@ void Renderer::DrawUI(Widget& InWidget, Vector2i InPosition, bool bIsMultiLine)
         {                
             CHAR_INFO Sprite;
             Sprite.Char.UnicodeChar = Text->GetText().at(i);
-            Sprite.Attributes = static_cast<WORD>(InWidget.GetOverrideColor()); // 0x0E Yellow color in decimal 
+            Sprite.Attributes = static_cast<WORD>(InWidget.GetOverrideColor()); 
             Vector2i Position = Text->GetWidgetPosition();
             Position.X += static_cast<int>(i);
-            if (bIsMultiLine && TempStr.at(i) == '\n')
+            if (bIsMultiLine)
             {
-                Position.Y = TempStr.length() % (WINDOW_WIDTH + 1);
+                Position.Y = TempStr.length() % (WINDOW_WIDTH);
             }
             AddElementToRenderBuffer(Sprite, Position);
         }
@@ -134,7 +134,7 @@ void Renderer::AddElementToRenderBuffer(CHAR_INFO InSprite, Vector2i InPosition)
     // Add the element to render to the buffer
     int Y = InPosition.Y;
     int X = InPosition.X;
-    m_RenderBuffer[InPosition.Y * 120 + InPosition.X] = InSprite;
+    m_RenderBuffer[Y * WINDOW_WIDTH + X] = InSprite;
 }
 
 void Renderer::SetConsoleColor(int InColor)
