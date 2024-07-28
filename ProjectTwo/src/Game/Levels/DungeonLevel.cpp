@@ -25,6 +25,5 @@ void DungeonLevel::Tick(float DeltaTime)
 void DungeonLevel::QuitGame()
 {
     GetApplication()->GetRendererRef().ClearConsoleScreen();
-    RemoveListenerForInput();
     GetApplication()->LoadWorld<MainMenuLevel>();
 }
