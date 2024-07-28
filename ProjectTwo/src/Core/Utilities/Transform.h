@@ -13,6 +13,9 @@ public:
         : m_Position(InX, InY), m_PreviousPosition(0, 0), m_HasMovedThisFrame(false) { }
 
     Vector2i GetPosition() const { return m_Position; }
+    Vector2i GetPreviousPosition() const { return m_PreviousPosition; }
+    
+    bool HasMovedThisFrame() const { return m_HasMovedThisFrame; }
     
     void SetPosition(int InX, int InY)
     {
