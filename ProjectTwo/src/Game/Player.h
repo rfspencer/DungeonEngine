@@ -26,7 +26,6 @@ class Player : public Actor
 public:
     Player(World* InOwningWorld);
     void Init();
-    void Update(float DeltaTime);
     void RemoveListenerForInput();
     void SetMoveSpeed(int InSpeed) { m_MoveSpeed = InSpeed; }
 

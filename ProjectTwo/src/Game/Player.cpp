@@ -19,10 +19,6 @@ void Player::Init()
     Input::AddListener(m_InputEvent);
 }
 
-void Player::Update(float DeltaTime)
-{
-}
-
 void Player::RemoveListenerForInput()
 {
     Input::RemoveListener(m_InputEvent);
