@@ -5,6 +5,7 @@
 const std::wstring GAME_NAME = L"Dungeon Crawler";
 constexpr size_t WINDOW_WIDTH = 120;
 constexpr size_t WINDOW_HEIGHT = 30;
+constexpr size_t RENDER_BUFFER_SIZE = WINDOW_WIDTH * WINDOW_HEIGHT;
 
 // 1 Blue
 // 2 Green
