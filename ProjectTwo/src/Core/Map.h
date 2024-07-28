@@ -14,10 +14,12 @@ public:
 
     void Init(const std::string& InPath);
 
-    // Overideing Render from Actor to draw as UI instead of an Actor
-    // void Render(Renderer& InRendererRef) override;
+    // Overriding Render from Actor to draw as UI instead of an Actor
+    void Render(Renderer& InRendererRef) override;
 
     std::array<char, WINDOW_WIDTH * WINDOW_HEIGHT>& GetMap() { return m_MapLayout; }
+
+    Delegate<> OnMapLoaded;
 
 private:
 

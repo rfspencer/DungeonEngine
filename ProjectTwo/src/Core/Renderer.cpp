@@ -2,6 +2,7 @@
 
 #include <ostream>
 
+#include "Map.h"
 #include "Core/Actor.h"
 #include "Widgets/TextWidget.h"
 #include "Widgets/Widget.h"
@@ -88,20 +89,42 @@ void Renderer::DrawActor(Actor& InActor)
 {
     // Actor calls this to add itself to a location in the Render buffer
     // TODO: Check if valid first
-    Vector2i Location = InActor.GetActorLocation();
+    Vector2i Position = InActor.GetActorLocation();
     int OverrideColor = InActor.GetOverrideColor();
 
     CHAR_INFO Sprite;
     Sprite.Char.UnicodeChar = InActor.GetSprite().at(0);
     Sprite.Attributes = static_cast<WORD>(OverrideColor);
-    AddElementToRenderBuffer(Sprite, Location);
-
+    AddElementToRenderBuffer(Sprite, Position);
+    
     // Erasing the sprite from the previous position
     if (InActor.HasMovedThisFrame())
     {
         Sprite.Char.UnicodeChar = ' ';
         Sprite.Attributes = static_cast<WORD>(OverrideColor);
         AddElementToRenderBuffer(Sprite, InActor.GetPreviousPosition());
+    }
+}
+
+void Renderer::DrawActor(Map* InMap)
+{
+    // Actor calls this to add itself to a location in the Render buffer
+    // TODO: Check if valid first
+    Vector2i Position = InMap->GetActorLocation();
+    Vector2i Size = InMap->GetActorSize();
+    int OverrideColor = InMap->GetOverrideColor();
+
+    std::string TempStr = InMap->GetSprite();
+    for(size_t i = 0; i < TempStr.length(); ++i)
+    {
+        if (TempStr.at(i) != ' ')
+        {
+            CHAR_INFO Sprite;
+            Sprite.Char.UnicodeChar = TempStr.at(i);
+            Sprite.Attributes = static_cast<WORD>(OverrideColor);
+            Position.X = static_cast<int>(i);
+            AddElementToRenderBuffer(Sprite, Position);
+        }
     }
 }
 
@@ -115,14 +138,14 @@ void Renderer::DrawUI(Widget& InWidget, Vector2i InPosition, bool bIsMultiLine)
         for(size_t i = 0; i < TempStr.length(); ++i)
         {                
             CHAR_INFO Sprite;
-            Sprite.Char.UnicodeChar = Text->GetText().at(i);
+            Sprite.Char.UnicodeChar = TempStr.at(i);
             Sprite.Attributes = static_cast<WORD>(InWidget.GetOverrideColor()); 
             Vector2i Position = Text->GetWidgetPosition();
             Position.X += static_cast<int>(i);
-            if (bIsMultiLine)
+            /*if (bIsMultiLine)
             {
-                Position.Y = TempStr.length() % (WINDOW_WIDTH);
-            }
+                Position.Y = TempStr.length() % WINDOW_WIDTH;
+            }*/
             AddElementToRenderBuffer(Sprite, Position);
         }
     }

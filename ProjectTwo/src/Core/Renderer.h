@@ -8,6 +8,7 @@
 #include "Game/Utilities/Constants.h" // TODO: not great to include game stuff here. Find a way to keep this in Game
 #include "Utilities/Vector2i.h"
 
+class Map;
 class Widget;
 
 class Renderer
@@ -19,7 +20,8 @@ public:
 
     void ClearConsoleScreen();
 
-    void DrawActor(Actor& InActor);    
+    void DrawActor(Actor& InActor);
+    void DrawActor(Map* InMap);
     void DrawUI(Widget& InWidget, Vector2i InPosition, bool bIsMultiLine = false);
     
     void DisplayRenderBuffer();
