@@ -1,12 +1,18 @@
-﻿# Journal
+# Journal
 Daily log of work done.
 - Load the map
 - Load assets for the map
 - Place the assets on the map
 - Place the player at player start
 
-### 7/26/2024
+### 7/27/2024
+Completed the Input class and callback functionality and hooked it up to the main menu. HUD classes now receive input notifications and can switch between levels. Currently, main menu can quit the game and start a new game by loading the DungeonLevel.
 
+Updated the Renderer to draw Actors to the console screen. The Renderer can also take in a color override to change the color of the sprite. The DungeonLevel now draws the HUD to console from the DungeonHUD layout file.
+
+Also implemented the Player class with player movement, created a Player Settings struct to hold the player's settings, and the Dungeon level spawns the player after it loads from the main menu.
+
+Lastly, created a Delegate class to handle event notification and subscription. This will primarily be used to drive the user interface, but I want to use this in the Input system as well. Currently, the Input system is a static library and doesn't have an instance in the world, so I"ll need to refactor the Input class if I want to use the Delegate system. That'll be a nice to have, if I have time.
 
 #### Class Diagram
 ```mermaid
@@ -18,6 +24,223 @@ direction TD
     World <|-- Object
     Actor <|-- Object
     Widget <|-- Object
+    Input <|-- Object
+    Delegate <|-- Object
+    Player <|-- Actor
+    TextWidget <|-- Widget
+    HUD <|-- Object
+    MainMenuHUD <|-- HUD
+    GameplayHUD <|-- HUD
+    MainMenuLevel <|-- World
+    DungeonLevel <|-- World
+    DungeonGame <|-- Application
+    namespace Game {
+        class DungeonGame {
+            +DungeonGame(int, int, std::wstring&)
+            +GetApplication() Application*
+        }
+        class MainMenuHUD {
+            +MainMenuHUD()
+            +Render(Renderer&) void
+            +HandleEvent() bool
+            -Init() void
+            -m_MainMenuLayout TextWidget
+            -m_MenuTitleText TextWidget
+            -m_NewGameText TextWidget
+            -m_QuitGameText TextWidget
+        }
+        class GameplayHUD {
+            +GameplayHUD()
+            +Render(Renderer&) void
+            -Init()
+            -TextWidget m_GameplayHUDBackground
+        }
+        class MainMenuLevel {
+            +MainMenuLevel(Application*)
+            +BeginPlay() void
+            +Tick(float) void
+            -StartGame() void
+            -QuitGame() void
+            -WeakPtr~MainMenuHUD~ m_MainMenuHUD
+        }
+        class DungeonLevel {
+            +DungeonLevel(Application*)
+            +BegonPlay() void
+            +Tick(float) void
+            -QuiteGame() void
+            -WeakPtr~Player~ m_Player
+            -WeakPtr~GameplayHUD~ m_GameplayHUD
+            -function~void(int)~ m_InputEvent;
+        }
+        class Player {
+            +Player()
+            +Init() void
+            +RemoveListenerForInput() void
+            +SetMoveSpeed(int) void
+            +CanMove() bool
+            +Move(Vector2i) void
+            -HandleInput(int) void
+            -PlayerSettings m_PlayerSettings
+            -int m_MoveSpeed
+            -function~void(int~ m_InputEvent;
+        }
+    }
+    namespace Core {
+        class Application {
+            +Application(int, int, std::string&)
+            +Run() void
+            +LoadWorld WeakPtr~WorldType~
+            +SetRenderIsDirty(bool) void
+            -TickInternal(float) void
+            -RenderInternal(Renderer&) void
+            -Render(Rendrer&) void
+            -Tick(float) void
+            -ProcessInput() void
+            -short m_WindowWidth
+            -short m_WindowHeight
+            -std::string m_Title
+            -float m_TargetFrameRate;
+            -Clock m_TickClock
+            -SharedPtr~World~ m_CurrentWorld
+            -SharedPtr~World~ m_PendingWorld
+            -bool m_bRenderIsDirty
+        }
+        class Object {
+            +Object()
+            +~Object()
+            +Destroy() void
+            +IsPendingDestroy() bool
+            +GetWeakRef() WeakPtr~Object~
+            +GetUniqueID() int
+            -uint m_UniqueID
+            -bool m_IsPendingDestroy
+        }
+        class Actor {
+            +Actor()
+            +~Actor()
+            +BeginPlayInternal() void
+            +TickInternal(float) void
+            +BeginPlay() void
+            +Tick(float) void
+            +Render(Renderer&) void
+            +SetActorLocation(Vector2i) void
+            +GetActorLocation() Vector2i
+            +GetWorld() World*
+            +Destroy() void
+            +ApplyDamage() void
+            +GetSprite() std::string&
+            -World* m_OwningWorld
+            -bool m_HasBeganPlay
+            -bool m_IsRenderable
+            -std::string m_Sprite
+            -int m_OverrideColor
+            -Transform m_Transform
+        }
+        class World {
+            +World()
+            +~World()
+            +BeginPlayInternal() void
+            +TickInternal(float) void
+            +Render(Renderer) void
+            +SpawnActor() WeakPtr<Actor>
+            +SpawnHUD() WeakPtr<HUD>
+            +GetApplication() Application*
+            -BeginPlay() void
+            -Tick(float) void
+            -RenderHUD(Renderer&) void
+            -Application* m_OwningApp
+            -bool m_bBeginPlay
+            -List<SharedPtr<Actor>> m_Actors
+            -List<SharedPtr<Actor>> m_PendingActors
+            -SharedPtr<HUD> m_HUD;
+        }
+        class Renderer {
+            +Renderer()
+            +Init(std::wstring) void
+            +ClearConsoleScreen() void
+            +DrawObject(Object&) void
+            +DrawUI(Widet&, Vector2i) void
+            +DisplayRenderBuffer() void
+            -FixConsoleWindow() void
+            -HideCursor() void
+            -GoToXY(int, int) void
+            -AddElementToRenderBuffer(CHAR_INFO, Vector2i) void
+            -SetConsoleColor(int) void
+            -m_RenderBuffer std::array<CHAR_INFO>
+        }
+        class HUD {
+            +Render(Renderer&) void
+            +InitInternal() void
+            +HasInit() bool
+            +HandleEvent() bool
+            +Tick() void
+            #HUD()
+            -Init() void
+            -m_HasInit bool
+        }
+        class Widget {
+            +RenderInternal(Renderer&) void
+            +SetWidgetPosition(Vector2i) void
+            +GetWidgetPosition() Vector2i
+            +SetVisibility(bool) void
+            +GetVisibility() bool
+            +SetDoesNeedUpdate(bool) void
+            +GetDoesNeedUpdate() bool
+            #Widget()
+            -Render(Renderer&) void
+            -LocationUpdated(Vector2i) void
+            -Transform m_WidgetTransform
+            -bool m_IsVisisble
+            -bool m_DoesNeedUpdate
+        }
+        class TextWidget {
+            +TextWidget()
+            +TedtWidget(std::string&)
+            +SetText(std::string&) void
+            +GetText() std::string
+            -Render(Renderer&) void
+            -std::string m_Text
+        }
+        class Input {
+            +Input()
+            +Update() void$
+            +GetKeyDown() int$
+            +AddListener() void$
+            +RemoveListener() void$
+            +CleanUp() void$
+            -m_KeyDown int$
+            -m_InputListeners std::vector~std::function~$
+        }
+        class FileHandler {
+            +DoesFileExist(char*) bool$
+            +ReadFile(char*) string$
+            +StringToTextWidget(string&, bool) TextWidget$
+        }
+        class Delegate {
+            +BindAction()
+            +Broadcast()
+        }
+    }
+```
+
+### 7/26/2024
+Going to include an updated, full class diagram each update. Easier for me to keep track of.
+
+Added a MainMenu.layout file to draw the menu background at once rather than one cell at a time. Added a FileHandler class to load files from disk. Specifically addressed loaded .layout files for UI layouts.
+
+Updated the Widget and Render classes to handle multiline text by adding a boolean parameter to the function. With that, MainMenuHUD loads the MainMenu.layout file and writes it to the console.
+
+#### Class Diagram
+```mermaid
+---
+title: Dungeon Crawler
+---
+classDiagram
+direction TD
+    World <|-- Object
+    Actor <|-- Object
+    Widget <|-- Object
+    Input <|-- Object
     TextWidget <|-- Widget
     HUD <|-- Object
     MainMenuHUD <|-- HUD
@@ -173,9 +396,13 @@ direction TD
             -m_KeyDown int$
             -m_InputListeners std::vector~std::function~$
         }
+        class FileHandler {
+            +DoesFileExist(char*) bool$
+            +ReadFile(char*) string$
+            +StringToTextWidget(string&, bool) TextWidget$
+        }
     }
 ```
-
 
 ### 7/25/2024
 
