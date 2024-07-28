@@ -2,6 +2,7 @@
 
 #include <ostream>
 
+#include "Core/Actor.h"
 #include "Widgets/TextWidget.h"
 #include "Widgets/Widget.h"
 
@@ -83,9 +84,25 @@ void Renderer::GoToXY(int InX, int InY)
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Coord);
 }
 
-void Renderer::DrawObject(const Object& InObject)
+void Renderer::DrawActor(Actor& InActor)
 {
     // Actor calls this to add itself to a location in the Render buffer
+    // TODO: Check if valid first
+    Vector2i Location = InActor.GetActorLocation();
+    int OverrideColor = InActor.GetOverrideColor();
+
+    CHAR_INFO Sprite;
+    Sprite.Char.UnicodeChar = InActor.GetSprite().at(0);
+    Sprite.Attributes = static_cast<WORD>(OverrideColor);
+    AddElementToRenderBuffer(Sprite, Location);
+
+    // Erasing the sprite from the previous position
+    if (InActor.HasMovedThisFrame())
+    {
+        Sprite.Char.UnicodeChar = ' ';
+        Sprite.Attributes = static_cast<WORD>(OverrideColor);
+        AddElementToRenderBuffer(Sprite, InActor.GetPreviousPosition());
+    }
 }
 
 void Renderer::DrawUI(Widget& InWidget, Vector2i InPosition, bool bIsMultiLine)
@@ -99,7 +116,7 @@ void Renderer::DrawUI(Widget& InWidget, Vector2i InPosition, bool bIsMultiLine)
         {                
             CHAR_INFO Sprite;
             Sprite.Char.UnicodeChar = Text->GetText().at(i);
-            Sprite.Attributes = 0x0E; // Yellow color in decimal
+            Sprite.Attributes = static_cast<WORD>(InWidget.GetOverrideColor()); // 0x0E Yellow color in decimal 
             Vector2i Position = Text->GetWidgetPosition();
             Position.X += static_cast<int>(i);
             if (bIsMultiLine && TempStr.at(i) == '\n')

@@ -19,7 +19,7 @@ public:
 
     void ClearConsoleScreen();
 
-    void DrawObject(const Object& InObject);
+    void DrawActor(Actor& InActor);    
     void DrawUI(Widget& InWidget, Vector2i InPosition, bool bIsMultiLine = false);
     
     void DisplayRenderBuffer();
