@@ -1,7 +1,7 @@
 ﻿#include "Widget.h"
 
 Widget::Widget()
-    : m_WidgetTransform(), m_IsVisible(true), m_DoesNeedUpdate(true)
+    : m_WidgetTransform(0, 0), m_IsVisible(true), m_DoesNeedUpdate(true), m_OverrideColor(7)
 {
 }
 

@@ -18,6 +18,9 @@ public:
     void SetVisibility(bool InNewVisibility);
     bool GetVisibility() const { return m_IsVisible; }
 
+    void SetOverrideColor(int InOverrideColor) { m_OverrideColor = InOverrideColor; }
+    int GetOverrideColor() const { return m_OverrideColor; }
+
     void SetDoesNeedUpdate(bool InDoesNeedUpdate) { m_DoesNeedUpdate = InDoesNeedUpdate; }
     bool GetDoesNeedUpdate() const { return m_DoesNeedUpdate; }
 
@@ -31,4 +34,5 @@ private:
     Transform m_WidgetTransform;
     bool m_IsVisible;
     bool m_DoesNeedUpdate;
+    int m_OverrideColor;
 };
