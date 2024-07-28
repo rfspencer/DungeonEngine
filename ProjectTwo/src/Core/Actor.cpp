@@ -52,6 +52,11 @@ void Actor::SetActorLocation(const Vector2i InNewLocation)
     m_Transform.SetPosition(InNewLocation);
 }
 
+void Actor::SetActorSize(const Vector2i InSize)
+{
+    m_Transform.SetSize(InSize);
+}
+
 void Actor::Destroy()
 {
     Object::Destroy();

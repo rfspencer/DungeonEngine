@@ -25,6 +25,9 @@ public:
     void SetActorLocation(const Vector2i InNewLocation);
     Vector2i GetActorLocation() const { return m_Transform.GetPosition(); }
 
+    void SetActorSize(const Vector2i InSize);
+    Vector2i GetActorSize() const { return m_Transform.GetSize(); }
+
     bool HasMovedThisFrame() const { return m_Transform.HasMovedThisFrame(); }
     Vector2i GetPreviousPosition() const { return m_Transform.GetPreviousPosition(); }
 
@@ -47,7 +50,7 @@ private:
     bool m_IsRenderable;
 
     std::string m_Sprite = "*";
-    int m_OverrideColor = -1;
+    int m_OverrideColor = 7;
 
     Transform m_Transform = Transform();
 };
