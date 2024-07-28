@@ -13,10 +13,19 @@ Actor::~Actor()
 
 void Actor::BeginPlayInternal()
 {
+    if (!m_HasBeganPlay)
+    {
+        m_HasBeganPlay = true;
+        BeginPlay();
+    }
 }
 
 void Actor::TickInternal(float DeltaTime)
 {
+    if (!IsPendingDestroy())
+    {
+        Tick(DeltaTime);
+    }
 }
 
 void Actor::BeginPlay()
@@ -33,7 +42,9 @@ void Actor::Render(Renderer& InRendererRef)
     {
         return;
     }
-    //InRendererRef.DrawObject();
+    // TODO: May need to check if we've moved before rendering. Do this in case of flickering.
+    // if (m_Transform.HasMovedThisFrame()) { }
+    InRendererRef.DrawActor(*this);
 }
 
 void Actor::SetActorLocation(const Vector2i InNewLocation)
