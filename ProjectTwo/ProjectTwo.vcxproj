@@ -421,6 +421,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="JOURNAL.md" />
+    <Content Include="src\Game\Data\DungeonOne.map" />
     <Content Include="src\Game\Data\GameplayHUD.layout" />
     <Content Include="src\Game\Data\MainMenu.layout" />
   </ItemGroup>
