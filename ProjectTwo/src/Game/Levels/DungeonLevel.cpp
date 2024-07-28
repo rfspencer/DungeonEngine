@@ -10,13 +10,12 @@
 DungeonLevel::DungeonLevel(Application* InOwningApp)
     : World(InOwningApp)
 {
-    m_GameplayHUD = SpawnHUD<GameplayHUD>();
-    // m_Player = SpawnActor<Player>();
 }
 
 void DungeonLevel::BeginPlay()
 {
-
+    m_GameplayHUD = SpawnHUD<GameplayHUD>();
+    m_Player = SpawnActor<Player>();
 }
 
 void DungeonLevel::Tick(float DeltaTime)
