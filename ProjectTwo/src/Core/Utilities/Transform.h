@@ -6,17 +6,15 @@ class Transform
 {
 public:
     Transform()
-        :  m_Position(0, 0), m_PreviousPosition(0, 0), m_HasMovedThisFrame(false) { }
-    Transform(Vector2i InNewPosition)
-        : m_Position(InNewPosition), m_PreviousPosition(0,0), m_HasMovedThisFrame(false) { }
-    Transform(int InX, int InY)
-        : m_Position(InX, InY), m_PreviousPosition(0, 0), m_HasMovedThisFrame(false) { }
-
+        :  m_Position(0, 0), m_PreviousPosition(0, 0), m_Size({1, 1}), m_HasMovedThisFrame(false) { }
+    Transform(Vector2i InNewPosition, Vector2i InSize = {1, 1})
+        : m_Position(InNewPosition), m_PreviousPosition(0,0), m_Size({1, 1}), m_HasMovedThisFrame(false) { }
+    Transform(int InPosX, int InPosY, int InSizeX = 1, int InSizeY = 1)
+        : m_Position(InPosX, InPosY), m_PreviousPosition(0, 0), m_Size({1, 1}), m_HasMovedThisFrame(false) { }
+    
+    
     Vector2i GetPosition() const { return m_Position; }
     Vector2i GetPreviousPosition() const { return m_PreviousPosition; }
-    
-    bool HasMovedThisFrame() const { return m_HasMovedThisFrame; }
-    
     void SetPosition(int InX, int InY)
     {
         m_PreviousPosition = m_Position;
@@ -44,10 +42,15 @@ public:
         }
     }
 
+    Vector2i GetSize() const { return m_Size; }
+    void SetSize(Vector2i InSize) { m_Size = InSize; } 
+    
+    bool HasMovedThisFrame() const { return m_HasMovedThisFrame; }
     
 private:
     Vector2i m_Position;
     Vector2i m_PreviousPosition;
+    Vector2i m_Size;
 
     bool m_HasMovedThisFrame;
 };
