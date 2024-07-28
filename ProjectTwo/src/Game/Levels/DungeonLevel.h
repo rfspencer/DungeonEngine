@@ -4,6 +4,7 @@
 
 class Player;
 class GameplayHUD;
+class Map;
 
 class DungeonLevel : public World
 {
@@ -12,12 +13,15 @@ public:
     void BeginPlay() override;
     void Tick(float DeltaTime) override;
 
+    WeakPtr<Map> GetMap() const { return m_Map; }
+
+    void QuitGame();
     
 private:    
-    void QuitGame();
 
     WeakPtr<Player> m_Player;    
     WeakPtr<GameplayHUD> m_GameplayHUD;
+    WeakPtr<Map> m_Map;
     
     std::function<void(int)> m_InputEvent;
 };
