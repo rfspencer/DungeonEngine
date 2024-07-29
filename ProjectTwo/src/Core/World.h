@@ -31,6 +31,10 @@ public:
 
     virtual WeakPtr<Player> GetPlayer() { return WeakPtr<Player>{}; }
 
+    // TODO: Not ideal. Future refactoring will need to fix this
+    // Ideally, Player would be the controller which would spawn the Pawn in the World.
+    friend class PlayerManager;
+
 private:
     virtual void BeginPlay();
     virtual void Tick(float DeltaTime);
