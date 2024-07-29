@@ -1,9 +1,257 @@
-# Journal
-Daily log of work done.
-- Load the map
-- Load assets for the map
-- Place the assets on the map
-- Place the player at player start
+﻿# Journal
+
+### 7/29/2024
+Added a `PlayerManager` class to handle spawning in and holding a reference to the `Player`. `DungeonLevel` uses the PlayerManager to spawn the actor into the level.
+
+Also set up `Player` attributes and related `Delegate` broadcasts. `GameplayHUD` now binds to these `Player` delegates to update the UI when appropriate.
+
+Added a `PickUp` class to define pick up styles with an enum `PickUpTypes` defined on the `PickUp` class. Updated the `World` to spawn in `PickUp` Actors and add them to the `Map`. I ran out of time and wasn't able to implement the interactions.
+
+Time to wrap up the report and turn this beast in. I think I'm going to keep working on this as I had WAY too much fun working on this and scratched the itch I had to make a game engine. Ultimately, I didn't finish the game, but I got a super cool engine started that can be extended to make games like [Nethack](https://www.nethack.org/), the inspiration for this project.
+
+#### Class Diagram
+```mermaid
+---
+title: Dungeon Crawler
+---
+classDiagram
+direction TD
+    World <|-- Object
+    Actor <|-- Object
+    Widget <|-- Object
+    Input <|-- Object
+    Delegate <|-- Object
+    Player <|-- Actor
+    TextWidget <|-- Widget
+    HUD <|-- Object
+    MainMenuHUD <|-- HUD
+    GameplayHUD <|-- HUD
+    MainMenuLevel <|-- World
+    DungeonLevel <|-- World
+    DungeonGame <|-- Application
+    Map <|-- Actor
+    PlayerManager -- DungeonLevel
+    PlayerManager -- Player
+    PickUp <|-- Actor
+    namespace Game {
+        class DungeonGame {
+            +DungeonGame(int, int, std::wstring&)
+            +GetApplication() Application*
+        }
+        class MainMenuHUD {
+            +MainMenuHUD()
+            +Render(Renderer&) void
+            +HandleEvent() bool
+            -Init() void
+            -m_MainMenuLayout TextWidget
+            -m_MenuTitleText TextWidget
+            -m_NewGameText TextWidget
+            -m_QuitGameText TextWidget
+        }
+        class GameplayHUD {
+            +GameplayHUD()
+            +Render(Renderer&) void
+            -Init()
+            -TextWidget m_GameplayHUDBackground
+        }
+        class MainMenuLevel {
+            +MainMenuLevel(Application*)
+            +BeginPlay() void
+            +Tick(float) void
+            -StartGame() void
+            -QuitGame() void
+            -WeakPtr~MainMenuHUD~ m_MainMenuHUD
+        }
+        class DungeonLevel {
+            +DungeonLevel(Application*)
+            +BegonPlay() void
+            +Tick(float) void
+            -QuiteGame() void
+            -WeakPtr~Player~ m_Player
+            -WeakPtr~GameplayHUD~ m_GameplayHUD
+            -function~void(int)~ m_InputEvent;
+        }
+        class Player {
+            +Player()
+            +Init() void
+            +RemoveListenerForInput() void
+            +SetMoveSpeed(int) void
+            +CanMove() bool
+            +Move(Vector2i) void
+            -HandleInput(int) void
+            -PlayerSettings m_PlayerSettings
+            -int m_MoveSpeed
+            -function~void(int~ m_InputEvent;
+        }
+        class PlayerManager {
+            #PlayerManager()
+            +CreateNewPlayer(World*) WeakPtr~Player~
+            +GetPlayer() WeakPtr~Player~
+            +Get() PlayerManager&$
+            -m_Players List~Player~
+            -m_PlayerManager UniquePtr~PlayerManager~$
+        }
+        class PickUp {
+            +PickUp(World*, PickUpType)
+            +OnInteract() void
+            +GetInteractionPrompt() string
+            +SetInteractionPrompt(string) void
+            +GetPickUpAmount() int
+            +SetPickUpAmount(int) void
+            +GiveGold(WeakPtr~Player~) void
+            +GiveHP(WeakPtr~Player~) void
+            +GiveMaxHP(WeakPtr~Player~) void
+            -GiveFunction m_GiveFunction
+            -string m_InteractionPrompt
+            -int m_PickUpAmout
+        }
+    }
+    namespace Core {
+        class Application {
+            +Application(int, int, std::string&)
+            +Run() void
+            +LoadWorld WeakPtr~WorldType~
+            +SetRenderIsDirty(bool) void
+            -TickInternal(float) void
+            -RenderInternal(Renderer&) void
+            -Render(Rendrer&) void
+            -Tick(float) void
+            -ProcessInput() void
+            -short m_WindowWidth
+            -short m_WindowHeight
+            -std::string m_Title
+            -float m_TargetFrameRate;
+            -Clock m_TickClock
+            -SharedPtr~World~ m_CurrentWorld
+            -SharedPtr~World~ m_PendingWorld
+            -bool m_bRenderIsDirty
+        }
+        class Object {
+            +Object()
+            +~Object()
+            +Destroy() void
+            +IsPendingDestroy() bool
+            +GetWeakRef() WeakPtr~Object~
+            +GetUniqueID() int
+            -uint m_UniqueID
+            -bool m_IsPendingDestroy
+        }
+        class Actor {
+            +Actor()
+            +~Actor()
+            +BeginPlayInternal() void
+            +TickInternal(float) void
+            +BeginPlay() void
+            +Tick(float) void
+            +Render(Renderer&) void
+            +SetActorLocation(Vector2i) void
+            +GetActorLocation() Vector2i
+            +GetWorld() World*
+            +Destroy() void
+            +ApplyDamage() void
+            +GetSprite() std::string&
+            -World* m_OwningWorld
+            -bool m_HasBeganPlay
+            -bool m_IsRenderable
+            -std::string m_Sprite
+            -int m_OverrideColor
+            -Transform m_Transform
+        }
+        class World {
+            +World()
+            +~World()
+            +BeginPlayInternal() void
+            +TickInternal(float) void
+            +Render(Renderer) void
+            +SpawnActor() WeakPtr<Actor>
+            +SpawnHUD() WeakPtr<HUD>
+            +GetApplication() Application*
+            -BeginPlay() void
+            -Tick(float) void
+            -RenderHUD(Renderer&) void
+            -Application* m_OwningApp
+            -bool m_bBeginPlay
+            -List<SharedPtr<Actor>> m_Actors
+            -List<SharedPtr<Actor>> m_PendingActors
+            -SharedPtr<HUD> m_HUD;
+        }
+        class Renderer {
+            +Renderer()
+            +Init(std::wstring) void
+            +ClearConsoleScreen() void
+            +DrawObject(Object&) void
+            +DrawUI(Widet&, Vector2i) void
+            +DisplayRenderBuffer() void
+            -FixConsoleWindow() void
+            -HideCursor() void
+            -GoToXY(int, int) void
+            -AddElementToRenderBuffer(CHAR_INFO, Vector2i) void
+            -SetConsoleColor(int) void
+            -m_RenderBuffer std::array<CHAR_INFO>
+        }
+        class HUD {
+            +Render(Renderer&) void
+            +InitInternal() void
+            +HasInit() bool
+            +HandleEvent() bool
+            +Tick() void
+            #HUD()
+            -Init() void
+            -m_HasInit bool
+        }
+        class Widget {
+            +RenderInternal(Renderer&) void
+            +SetWidgetPosition(Vector2i) void
+            +GetWidgetPosition() Vector2i
+            +SetVisibility(bool) void
+            +GetVisibility() bool
+            +SetDoesNeedUpdate(bool) void
+            +GetDoesNeedUpdate() bool
+            #Widget()
+            -Render(Renderer&) void
+            -LocationUpdated(Vector2i) void
+            -Transform m_WidgetTransform
+            -bool m_IsVisisble
+            -bool m_DoesNeedUpdate
+        }
+        class TextWidget {
+            +TextWidget()
+            +TedtWidget(std::string&)
+            +SetText(std::string&) void
+            +GetText() std::string
+            -Render(Renderer&) void
+            -std::string m_Text
+        }
+        class Input {
+            +Input()
+            +Update() void$
+            +GetKeyDown() int$
+            +AddListener() void$
+            +RemoveListener() void$
+            +CleanUp() void$
+            -m_KeyDown int$
+            -m_InputListeners std::vector~std::function~$
+        }
+        class FileHandler {
+            +DoesFileExist(char*) bool$
+            +ReadFile(char*) string$
+            +StringToTextWidget(string&, bool) TextWidget$
+        }
+        class Delegate {
+            +BindAction()
+            +Broadcast()
+        }
+        class Map {
+            +Map(World*, string)
+            +Init(string)
+            +Render(Renderer&) void
+            +TileIsEmpty(Vector2i) bool
+            +GetMap() Array[x][y]
+            +Delegate OnMapLoaded
+            -m_MapLayout Array[x][y]
+        }
+    }
+```
 
 ### 7/28/2024
 Completed the `Map` class (derived from `Actor`) and supporting updates to `FileHandler` to load map files from disk and display in the console. Also implemented movement blocking by occupied map tiles and sets the player's starting position in the level. Ideally this would be loaded from the map, but for now I'm just hardcoding the player start in the level.
