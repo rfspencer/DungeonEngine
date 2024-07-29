@@ -14,11 +14,11 @@ public:
     void Tick(float DeltaTime) override;
 
     WeakPtr<Map> GetMap() const { return m_Map; }
+    WeakPtr<Player> GetPlayer() override { return m_Player; }
 
     void QuitGame();
     
 private:    
-
     WeakPtr<Player> m_Player;    
     WeakPtr<GameplayHUD> m_GameplayHUD;
     WeakPtr<Map> m_Map;
