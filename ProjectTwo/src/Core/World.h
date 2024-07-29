@@ -3,6 +3,7 @@
 #include "Core/Object.h"
 #include "Core/Types.h"
 
+class Player;
 class Actor;
 class Application;
 class HUD;
@@ -27,6 +28,8 @@ public:
     
     Application* GetApplication() { return m_OwningApp; }
     const Application* GetApplication() const { return m_OwningApp; }
+
+    virtual WeakPtr<Player> GetPlayer() { return WeakPtr<Player>{}; }
 
 private:
     virtual void BeginPlay();
