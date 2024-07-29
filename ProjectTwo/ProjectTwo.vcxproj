@@ -242,6 +242,7 @@
     <ClCompile Include="src\Core\Widgets\TextWidget.cpp" />
     <ClCompile Include="src\Core\Widgets\Widget.cpp" />
     <ClCompile Include="src\Core\World.cpp" />
+    <ClCompile Include="src\Game\Actors\PickUp.cpp" />
     <ClCompile Include="src\Game\DungeonGame.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -316,6 +317,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="src\Game\Interface\Interact.cpp" />
     <ClCompile Include="src\Game\Levels\DungeonLevel.cpp" />
     <ClCompile Include="src\Game\Levels\MainMenuLevel.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -488,6 +490,8 @@
     <ClInclude Include="src\Core\Widgets\TextWidget.h" />
     <ClInclude Include="src\Core\Widgets\Widget.h" />
     <ClInclude Include="src\Core\World.h" />
+    <ClInclude Include="src\Game\Actors\PickUp.h" />
+    <ClInclude Include="src\Game\Interface\Interact.h" />
     <ClInclude Include="src\Game\Levels\DungeonLevel.h" />
     <ClInclude Include="src\Game\Levels\MainMenuLevel.h" />
     <ClInclude Include="src\Game\Player\Player.h" />
