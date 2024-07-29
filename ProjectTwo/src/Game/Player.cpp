@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include "Input.h"
+#include "Map.h"
+#include "Levels/DungeonLevel.h"
 
 Player::Player(World* InOwningWorld)
     : Actor(InOwningWorld), m_MoveSpeed(1)
@@ -24,14 +26,26 @@ void Player::RemoveListenerForInput()
     Input::RemoveListener(m_InputEvent);
 }
 
-bool Player::CanMove()
+bool Player::CanMove(const Vector2i InOffset)
 {
-    return true;
+    // Check the map to see if the player can move into that position
+    DungeonLevel* Level = dynamic_cast<DungeonLevel*>(GetWorld());
+    WeakPtr<Map> Map = Level->GetMap();
+    if (!Map.expired())
+    {
+        Vector2i PlayerPosition = GetActorLocation();
+        Vector2i NewPosition = PlayerPosition + InOffset;
+        if(Map.lock()->TileIsEmpty(NewPosition))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Player::Move(const Vector2i InOffset)
 {
-    if (CanMove())
+    if (CanMove(InOffset))
     {
         const Vector2i CurrentLocation = GetActorLocation();
         SetActorLocation(CurrentLocation + InOffset);

@@ -29,7 +29,7 @@ public:
     void RemoveListenerForInput();
     void SetMoveSpeed(int InSpeed) { m_MoveSpeed = InSpeed; }
 
-    bool CanMove();
+    bool CanMove(const Vector2i InOffset);
     void Move(const Vector2i InOffset);
 
 private:
