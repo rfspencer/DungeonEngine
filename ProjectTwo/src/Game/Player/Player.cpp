@@ -1,7 +1,5 @@
 ﻿#include "Player.h"
 
-#include <iostream>
-
 #include "Input.h"
 #include "Map.h"
 #include "Levels/DungeonLevel.h"
