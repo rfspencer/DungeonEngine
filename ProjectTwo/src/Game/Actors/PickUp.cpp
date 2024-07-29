@@ -1,4 +1,12 @@
-﻿#include "PickUp.h"
+﻿/**
+* @file PickUp.cpp
+ * @brief Implementation for the PickUp class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "PickUp.h"
 
 #include "World.h"
 #include "Player/Player.h"
@@ -24,7 +32,6 @@ PickUp::PickUp(World* InOwningWorld, PickUpType InType)
             m_InteractionPrompt = "You found a Health Potion!";
             break;
         }
-
     case MaxHealth:
         {
             // m_GiveFunction = std::bind(&PickUp::GiveGold, this, std::placeholders::_1);
@@ -33,8 +40,6 @@ PickUp::PickUp(World* InOwningWorld, PickUpType InType)
             m_InteractionPrompt = "You found a Max Health Potion!";
             break;
         }
-        break;
-        
     }
 }
 

@@ -1,4 +1,12 @@
-﻿#include "MainMenuLevel.h"
+﻿/**
+* @file MainMenuLevel.cpp
+ * @brief Implementation for the MainMenuLevel class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "MainMenuLevel.h"
 
 #include "Core/Application.h"
 #include "Core/Input.h"

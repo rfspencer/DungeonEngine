@@ -1,4 +1,12 @@
-﻿#pragma once
+﻿/**
+* @file PickUp.h
+ * @brief Header for the PickUp class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#pragma once
 
 #include "Actor.h"
 #include "Game/Interface/Interact.h"
@@ -15,6 +23,17 @@ enum PickUpType
 // using GiveFunction = std::function<void(WeakPtr<Player>)>;
 typedef std::function<void(WeakPtr<Player>)> GiveFunction;
 
+/**
+ * @class PickUp
+ * @brief Represents a pick-up object that can be interacted with by the player.
+ *
+ * The PickUp class is derived from both the Actor and Interact classes. It represents
+ * a pick-up item in the game world that the player can interact with. The class provides
+ * methods for setting and getting the interaction prompt, the pick-up amount, and for giving
+ * gold, HP, and max HP to the player when interacted with.
+ *
+ * @note Class is incomplete. Currently on functionality is rendering Actor on Map
+ */
 class PickUp : public Actor, public Interact
 {
 public:

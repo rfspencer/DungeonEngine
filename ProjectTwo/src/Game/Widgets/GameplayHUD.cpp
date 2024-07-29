@@ -1,4 +1,12 @@
-﻿#include "GameplayHUD.h"
+﻿/**
+* @file GameplayHUD.cpp
+ * @brief Implementation for the GameplayHUD class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "GameplayHUD.h"
 
 #include "World.h"
 #include "Player/PlayerManager.h"

@@ -1,4 +1,12 @@
-﻿#include "Game/Levels/DungeonLevel.h"
+﻿/**
+* @file DungeonLevel.cpp
+ * @brief Implementation for the DungeonLevel class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "Game/Levels/DungeonLevel.h"
 
 #include <memory>
 

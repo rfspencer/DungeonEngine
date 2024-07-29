@@ -1,4 +1,12 @@
-﻿#include "Player.h"
+﻿/**
+* @file Player.cpp
+ * @brief Implementation for the Player class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "Player.h"
 
 #include "Input.h"
 #include "Map.h"
@@ -18,13 +26,15 @@ Player::Player(World* InOwningWorld)
 void Player::Init()
 {
     SetSprite(m_PlayerSettings.Sprite);
-    
+
+    // Binding to input events
     m_InputEvent = std::bind(&Player::HandleInput, this, std::placeholders::_1);
     Input::AddListener(m_InputEvent);
 }
 
 void Player::BeginPlay()
 {
+    // Initial broadcast of all Player delegates to update HUD
     OnPlayerStatsChanged.Broadcast(m_PlayerStats);
     OnLevelChanged.Broadcast(m_Level);
     OnXPChanged.Broadcast(m_XP);

@@ -1,20 +1,45 @@
-﻿#pragma once
+﻿/**
+* @file GameplayHUD.h
+ * @brief Header for the GameplayHUD class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#pragma once
 
 #include "Widgets/HUD.h"
 #include "Widgets/TextWidget.h"
 
 struct Stats;
 
+/**
+ * @class GameplayHUD
+ * @brief The GameplayHUD class is a subclass of the HUD class that represents the in-game heads-up display.
+ *
+ * The GameplayHUD class provides methods and properties for rendering and updating the HUD on the screen.
+ */
 class GameplayHUD : public HUD
 {
 public:
     GameplayHUD();
-    
+
+    /**
+     * @brief Renders the GameplayHUD on the screen.
+     *
+     * This method is called to render the GameplayHUD on the screen using the provided Renderer object.
+     *
+     * @param InRendererRef The reference to the Renderer object that will be used to render the GameplayHUD.
+     */
     void Render(Renderer& InRendererRef) override;
 
+    /**
+     * Binds delegates for player events.
+     */
     void BindDelegates();
 
 private:
+    // Delegate Function Callbacks
     void PlayerStatsChanged(const Stats InStats);
     void PlayerLevelChanged(const int InLevel);
     void PlayerGoldChanged(const int InGold);
@@ -25,6 +50,7 @@ private:
     
     void Init() override;
 
+    // TextWidgets displayed in the HUD
     TextWidget m_GameplayHUDBackground;
     
     TextWidget m_PlayerStats_Str;

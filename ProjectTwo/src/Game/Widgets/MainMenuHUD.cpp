@@ -1,8 +1,15 @@
-﻿#include "MainMenuHUD.h"
+﻿/**
+* @file MainMenuHUD.cpp
+ * @brief Implementation for the MainMenuHUD class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "MainMenuHUD.h"
 
 #include "Core/Utilities/FileHandler.h"
 
-#include <iostream>
 #include <ostream>
 
 const char* DATA_MAINMENU_LAYOUT_PATH = "src/Game/Data/MainMenu.layout";
