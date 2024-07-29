@@ -48,14 +48,25 @@ TextWidget FileHandler::StringToTextWidget(const std::string& InString, bool bLo
     return TempWidget;
 }
 
-std::array<char, RENDER_BUFFER_SIZE> FileHandler::StringToMap(const std::string& InString, bool bLoadAllData)
+std::array<std::array<char, WINDOW_WIDTH>, WINDOW_HEIGHT> FileHandler::StringToMap(const std::string& InString, bool bLoadAllData)
 {
-    std::array<char, RENDER_BUFFER_SIZE> TempArray;
+    std::array<std::array<char, WINDOW_WIDTH>, WINDOW_HEIGHT> TempArray;
     if (bLoadAllData)
     {
-        for (unsigned int i = 0; i < RENDER_BUFFER_SIZE; ++i)
+        int Row = 0;
+        int Column = 0;
+        
+        for (const char& Char : InString)
         {
-            TempArray[i] = InString.at(i);
+            TempArray[Row][Column] = Char;
+            Column++;
+            
+            if (Column % 120 == 0)
+            {
+                Column = 0;
+                Row++;
+            }
+            if (Row > WINDOW_HEIGHT) break;
         }
         return TempArray;
     }

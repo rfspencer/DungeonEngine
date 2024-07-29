@@ -48,15 +48,14 @@ public:
     static TextWidget StringToTextWidget(const std::string& InString, bool bLoadAllData = true);
 
     /**
-     * @brief Deserialize a string representation of an array object.
-     *
-     * This function takes a string and converts it into a Widget objects.
+     * @brief Convert a string to an array Map object.
      *
      * @private @memberof FileHandler
-     * @param InString The string to deserialize into a Book object.
-     * @param bLoadAllData Whether to load all data including the checked out status of the book. Default: true
+     * @param InString The string to convert to 2D map array.
+     * @param bLoadAllData Whether to load all data including the checked out status of the map. Default: true
+     * @note This function assumes the map data fills the render buffer space.
      *
      * @return Map populated with string data.
      */
-    static std::array<char, RENDER_BUFFER_SIZE> StringToMap(const std::string& InString, bool bLoadAllData = true);
+    static std::array<std::array<char, WINDOW_WIDTH>, WINDOW_HEIGHT> StringToMap(const std::string& InString, bool bLoadAllData = true);
 };
