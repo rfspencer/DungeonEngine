@@ -4,7 +4,7 @@
 
 UniquePtr<PlayerManager> PlayerManager::m_PlayerManager{nullptr};
 
-std::weak_ptr<Player> PlayerManager::CreateNewPlayer(World* InOwningWorld)
+WeakPtr<Player> PlayerManager::CreateNewPlayer(World* InOwningWorld)
 {
     SharedPtr<Player> NewPlayer = std::make_shared<Player>(InOwningWorld);    
     m_Players.emplace(m_Players.begin(), NewPlayer);
@@ -13,12 +13,12 @@ std::weak_ptr<Player> PlayerManager::CreateNewPlayer(World* InOwningWorld)
     return std::weak_ptr<Player>(m_Players.back());
 }
 
-std::weak_ptr<Player> PlayerManager::GetPlayer()
+WeakPtr<Player> PlayerManager::GetPlayer()
 {
     return m_Players[0];
 }
 
-std::weak_ptr<Player> PlayerManager::GetPlayer() const
+WeakPtr<Player> PlayerManager::GetPlayer() const
 {
     return m_Players[0];
 }

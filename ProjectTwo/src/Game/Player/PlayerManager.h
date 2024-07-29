@@ -5,10 +5,10 @@
 class PlayerManager
 {
 public:
-    std::weak_ptr<Player> CreateNewPlayer(World* InOwningWorld);
+    WeakPtr<Player> CreateNewPlayer(World* InOwningWorld);
 
-    std::weak_ptr<Player> GetPlayer();
-    std::weak_ptr<Player> GetPlayer() const;
+    WeakPtr<Player> GetPlayer();
+    WeakPtr<Player> GetPlayer() const;
 
     static PlayerManager& Get();
 
