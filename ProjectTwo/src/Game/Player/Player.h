@@ -48,6 +48,7 @@ public:
     Player(World* InOwningWorld);
     void Init();
     void BeginPlay() override;
+    void Tick(float DeltaTime) override;
     
     void RemoveListenerForInput();
     void SetMoveSpeed(int InSpeed) { m_MoveSpeed = InSpeed; }
@@ -70,6 +71,7 @@ public:
 
 private:
     void HandleInput(int InKeyPressed);
+    bool CheckForInteractables();
 
     PlayerSettings m_PlayerSettings;
     unsigned int m_MoveSpeed;

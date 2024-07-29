@@ -2,6 +2,8 @@
 
 #include "Input.h"
 #include "Map.h"
+#include "Actors/PickUp.h"
+#include "Interface/Interact.h"
 #include "Levels/DungeonLevel.h"
 
 Player::Player(World* InOwningWorld)
@@ -30,6 +32,13 @@ void Player::BeginPlay()
     OnPositionChanged.Broadcast(GetActorLocation());
     OnMaxHealthChanged.Broadcast(m_PlayerStats.MaxHP);
     OnHealthChanged.Broadcast(m_Health);
+}
+
+void Player::Tick(float DeltaTime)
+{
+    Actor::Tick(DeltaTime);
+
+    CheckForInteractables();
 }
 
 void Player::RemoveListenerForInput()
@@ -86,4 +95,29 @@ void Player::HandleInput(int InKeyPressed)
         const Vector2i Direction{1, 0};
         Move(Direction);
     }
+}
+
+bool Player::CheckForInteractables()
+{
+    // Check the squares surrounding the player
+    bool bFoundInteractable = false;
+    Vector2i CheckDirection = {0, 0};
+    Vector2i Self = {0,0};
+    
+    for (int i = -1; i <= 1; ++i)
+    {
+        for (int j = -1; i <= 1; ++i)
+        {
+            CheckDirection = {j, i};
+            if (CheckDirection != Self) // We don't want to check ourselves
+            {
+                bool bIsInteractable = std::is_base_of_v<Interact, PickUp>;
+                if (!CanMove(CheckDirection) && bIsInteractable)
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
