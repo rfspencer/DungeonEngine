@@ -57,6 +57,9 @@ public:
 
     LevelUpXP& GetLevelUpXP() { return m_LevelUpXp; }
 
+    unsigned int GetGold() const { return m_Gold; }
+    void AddToGold(unsigned int InAmountToAdd = 1) { m_Gold += InAmountToAdd; }
+
     Delegate<Stats> OnPlayerStatsChanged;
     Delegate<int> OnLevelChanged;
     Delegate<int> OnXPChanged;
