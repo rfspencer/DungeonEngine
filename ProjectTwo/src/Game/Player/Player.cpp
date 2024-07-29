@@ -9,6 +9,7 @@ Player::Player(World* InOwningWorld)
       m_MoveSpeed(1), m_Level(1), m_XP(0), m_Gold(0)
 {
     Init();
+    m_Health = m_PlayerStats.MaxHP;
     SetOverrideColor(m_PlayerSettings.Color);
 }
 
@@ -26,6 +27,9 @@ void Player::BeginPlay()
     OnLevelChanged.Broadcast(m_Level);
     OnXPChanged.Broadcast(m_XP);
     OnGoldChanged.Broadcast(m_Gold);
+    OnPositionChanged.Broadcast(GetActorLocation());
+    OnMaxHealthChanged.Broadcast(m_PlayerStats.MaxHP);
+    OnHealthChanged.Broadcast(m_Health);
 }
 
 void Player::RemoveListenerForInput()
@@ -57,6 +61,7 @@ void Player::Move(const Vector2i InOffset)
         const Vector2i CurrentLocation = GetActorLocation();
         SetActorLocation(CurrentLocation + InOffset);
     }
+    OnPositionChanged.Broadcast(GetActorLocation());
 }
 
 void Player::HandleInput(int InKeyPressed)

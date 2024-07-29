@@ -29,6 +29,9 @@ struct Stats
     int Int = 10;
     int Wis = 12;
     int Cha = 8;
+    
+    int AC = Dex + 2;
+    int MaxHP = (Con + Str) / 2;
 };
 
 struct LevelUpXP
@@ -52,10 +55,15 @@ public:
     bool CanMove(const Vector2i InOffset);
     void Move(const Vector2i InOffset);
 
+    LevelUpXP& GetLevelUpXP() { return m_LevelUpXp; }
+
     Delegate<Stats> OnPlayerStatsChanged;
     Delegate<int> OnLevelChanged;
     Delegate<int> OnXPChanged;
     Delegate<int> OnGoldChanged;
+    Delegate<Vector2i> OnPositionChanged;
+    Delegate<int> OnHealthChanged;
+    Delegate<int> OnMaxHealthChanged;
 
 private:
     void HandleInput(int InKeyPressed);
@@ -65,7 +73,9 @@ private:
     unsigned int m_Level;
     unsigned int m_XP;
     unsigned int m_Gold;
+    unsigned int m_Health;
 
     Stats m_PlayerStats;
+    LevelUpXP m_LevelUpXp;
     std::function<void(int)> m_InputEvent;
 };
