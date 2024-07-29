@@ -7,7 +7,8 @@
 #include "Levels/DungeonLevel.h"
 
 Player::Player(World* InOwningWorld)
-    : Actor(InOwningWorld), m_MoveSpeed(1)
+    : Actor(InOwningWorld),
+      m_MoveSpeed(1), m_Level(1), m_XP(0), m_Gold(0)
 {
     Init();
     SetOverrideColor(m_PlayerSettings.Color);
@@ -19,6 +20,14 @@ void Player::Init()
     
     m_InputEvent = std::bind(&Player::HandleInput, this, std::placeholders::_1);
     Input::AddListener(m_InputEvent);
+}
+
+void Player::BeginPlay()
+{
+    OnPlayerStatsChanged.Broadcast(m_PlayerStats);
+    OnLevelChanged.Broadcast(m_Level);
+    OnXPChanged.Broadcast(m_XP);
+    OnGoldChanged.Broadcast(m_Gold);
 }
 
 void Player::RemoveListenerForInput()
