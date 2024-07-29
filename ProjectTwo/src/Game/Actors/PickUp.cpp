@@ -16,6 +16,24 @@ PickUp::PickUp(World* InOwningWorld, PickUpType InType)
             m_InteractionPrompt = "You found some Gold!";
             break;    
         }
+    case Health:
+        {
+            // m_GiveFunction = std::bind(&PickUp::GiveGold, this, std::placeholders::_1);
+            SetSprite("!");
+            SetOverrideColor(4);
+            m_InteractionPrompt = "You found a Health Potion!";
+            break;
+        }
+
+    case MaxHealth:
+        {
+            // m_GiveFunction = std::bind(&PickUp::GiveGold, this, std::placeholders::_1);
+            SetSprite("#");
+            SetOverrideColor(9);
+            m_InteractionPrompt = "You found a Max Health Potion!";
+            break;
+        }
+        break;
         
     }
 }
