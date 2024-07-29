@@ -21,6 +21,9 @@ public:
 
     std::array<std::array<char, WINDOW_WIDTH>, WINDOW_HEIGHT>* GetMap() { return &m_MapLayout; }
 
+    void AddActorToMap(Actor* InActor);
+    void RemoveActorFromMap(Actor* InActor);
+
     Delegate<> OnMapLoaded;
 
 private:

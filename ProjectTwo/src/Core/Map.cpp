@@ -41,3 +41,16 @@ bool Map::TileIsEmpty(Vector2i InPosition) const
     }
     return false;    
 }
+
+void Map::AddActorToMap(Actor* InActor)
+{
+    if (InActor != nullptr)
+    {
+        Vector2i ActorPosition = InActor->GetActorLocation();
+        m_MapLayout[ActorPosition.Y][ActorPosition.X] = InActor->GetSprite()[0];
+    }
+}
+
+void Map::RemoveActorFromMap(Actor* InActor)
+{
+}
