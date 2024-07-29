@@ -53,4 +53,9 @@ void Map::AddActorToMap(Actor* InActor)
 
 void Map::RemoveActorFromMap(Actor* InActor)
 {
+    if (InActor != nullptr)
+    {
+        Vector2i ActorPosition = InActor->GetActorLocation();
+        m_MapLayout[ActorPosition.X][ActorPosition.Y] = ' ';
+    }
 }
