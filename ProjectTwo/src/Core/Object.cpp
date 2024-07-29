@@ -1,4 +1,12 @@
-﻿#include "Object.h"
+﻿/**
+* @file Object.cpp
+ * @brief Implementation for the Object class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "Object.h"
 
 unsigned int Object::UniqueIDCounter = 0;
 Object::Object()

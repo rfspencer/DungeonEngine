@@ -1,4 +1,12 @@
-﻿#include "Core/Actor.h"
+﻿/**
+* @file Actor.cpp
+ * @brief Implementation for the Actor class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "Core/Actor.h"
 
 #include "Core/Renderer.h"
 

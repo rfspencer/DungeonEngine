@@ -1,14 +1,20 @@
-﻿#include "Core/Application.h"
+﻿/**
+* @file Application.cpp
+ * @brief Implementation for the Application class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
 
-#include <iomanip>
-#include <iostream>
+#include "Core/Application.h"
+
 #include <memory>
 
 #include "Core/Input.h"
 
 Application::Application(const int InWindowWidth, const int InWindowHeight, const std::wstring& InTitle)
     : m_WindowWidth(InWindowWidth), m_WindowHeight(InWindowHeight), m_Title(InTitle),
-        m_TargetFrameRate(60.f), m_TickClock(), m_CurrentWorld(nullptr), m_PendingWorld(nullptr), m_bRenderIsDirty(true)
+        m_TargetFrameRate(60.f), m_TickClock(), m_CurrentWorld(nullptr), m_PendingWorld(nullptr)
 {
 }
 
@@ -29,14 +35,14 @@ void Application::Run()
         // Poll input events
         ProcessInput();
         
-        // Dispatch events
+        // TODO: Dispatch application events
         
         // Handle tick, timers
         float FrameDeltaTime = m_TickClock.Restart();
         AccumulatedTime += FrameDeltaTime;
 
         // Render only if current frame is dirty AND if we've accumulated time outside TargetDeltaTime
-        if (m_bRenderIsDirty && AccumulatedTime > TargetDeltaTime)
+        if (AccumulatedTime > TargetDeltaTime)
         {
             AccumulatedTime -= TargetDeltaTime;
             TickInternal(TargetDeltaTime);
@@ -62,9 +68,6 @@ void Application::TickInternal(float DeltaTime)
 
 void Application::RenderInternal(Renderer& InRendererRef)
 {
-    // Clear Screen buffer, Windows only
-    // InRendererRef.ClearConsoleScreen();
-
     // Populate the render buffer
     Render(InRendererRef);
 

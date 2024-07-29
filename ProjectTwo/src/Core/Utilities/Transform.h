@@ -1,7 +1,22 @@
+/**
+* @file Transform.h
+ * @brief Header for the Transform class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
 #pragma once
 
 #include "Utilities/Vector2i.h"
 
+/**
+ * @class Transform
+ *
+ * @brief The Transform class represents a 2D transformations on an Actor or Object.
+ *
+ * The Transform class provides functionality to store and manipulate a 2D position and size.
+ */
 class Transform
 {
 public:

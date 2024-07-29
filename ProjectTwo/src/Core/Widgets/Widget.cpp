@@ -1,4 +1,12 @@
-﻿#include "Widget.h"
+﻿/**
+* @file Widget.cpp
+ * @brief Implementation for the Widget class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "Widget.h"
 
 Widget::Widget()
     : m_WidgetTransform(0, 0), m_IsVisible(true), m_DoesNeedUpdate(true), m_OverrideColor(7)

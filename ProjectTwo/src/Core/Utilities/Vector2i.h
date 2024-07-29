@@ -1,5 +1,18 @@
+/**
+* @file Vector2i.h
+ * @brief Header for the Vector2i class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
 #pragma once
 
+/**
+ * @struct Vector2i
+ *
+ * @brief A Vector class for 2 dimension, integer pairs
+ */
 struct Vector2i
 {
 public:

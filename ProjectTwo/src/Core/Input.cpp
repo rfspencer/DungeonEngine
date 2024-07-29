@@ -1,4 +1,12 @@
-﻿#include "Input.h"
+﻿/**
+* @file Input.cpp
+ * @brief Implementation for the Input class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "Input.h"
 
 #include <conio.h>
 

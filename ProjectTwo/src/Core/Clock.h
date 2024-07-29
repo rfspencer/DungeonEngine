@@ -1,7 +1,21 @@
-﻿#pragma once
+﻿/**
+* @file Clock.h
+ * @brief Header for the Clock class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#pragma once
 
 #include <chrono>
 
+/**
+ * @class Clock
+ * @brief Represents a high-resolution clock to measure time intervals.
+ *
+ * This class provides functionality to measure elapsed time and restart the clock.
+ */
 class Clock
 {
 public:

@@ -1,6 +1,12 @@
-﻿#include "Core/Renderer.h"
+﻿/**
+* @file Renderer.cpp
+ * @brief Implementation for the Renderer class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
 
-#include <ostream>
+#include "Core/Renderer.h"
 
 #include "Map.h"
 #include "Core/Actor.h"
@@ -23,6 +29,7 @@ void Renderer::Init(std::wstring InTitle)
     SMALL_RECT RCRegion = {0, 0, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1 };
 
     ReadConsoleOutput(OutputHandle, m_RenderBuffer.data(), DWBufferSize, DWBufferCoord, &RCRegion);
+    SetConsoleTitle(InTitle.c_str());
 }
 
 void Renderer::ClearConsoleScreen()
@@ -92,6 +99,7 @@ void Renderer::DrawActor(Actor& InActor)
     Vector2i Position = InActor.GetActorLocation();
     int OverrideColor = InActor.GetOverrideColor();
 
+    // Configure the Sprite
     CHAR_INFO Sprite;
     Sprite.Char.UnicodeChar = InActor.GetSprite().at(0);
     Sprite.Attributes = static_cast<WORD>(OverrideColor);
@@ -131,21 +139,19 @@ void Renderer::DrawActor(Map* InMap)
 void Renderer::DrawUI(Widget& InWidget, Vector2i InPosition, bool bIsMultiLine)
 {
     // TODO: Need to setup a Delegate system for the UI so the UI can update when game state changes
-    // If we're trying to draw a TextWidget
+    // If we're trying to draw a TextWidget. Future iteration may include other Widgets than just TextWidgets
     if(TextWidget* Text = dynamic_cast<TextWidget*>(&InWidget))
     {
         std::string TempStr = Text->GetText();
         for(size_t i = 0; i < TempStr.length(); ++i)
-        {                
+        {
+            // Configure the sprite
             CHAR_INFO Sprite;
             Sprite.Char.UnicodeChar = TempStr.at(i);
             Sprite.Attributes = static_cast<WORD>(InWidget.GetOverrideColor()); 
             Vector2i Position = Text->GetWidgetPosition();
             Position.X += static_cast<int>(i);
-            /*if (bIsMultiLine)
-            {
-                Position.Y = TempStr.length() % WINDOW_WIDTH;
-            }*/
+
             AddElementToRenderBuffer(Sprite, Position);
         }
     }

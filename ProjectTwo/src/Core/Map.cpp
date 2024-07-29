@@ -1,4 +1,12 @@
-﻿#include "Map.h"
+﻿/**
+* @file Map.cpp
+ * @brief Implementation for the Map class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "Map.h"
 
 #include "Utilities/FileHandler.h"
 

@@ -1,4 +1,12 @@
-﻿#include "FileHandler.h"
+﻿/**
+* @file FileHandler.cpp
+ * @brief Implementation for the FileHandler class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "FileHandler.h"
 
 #include "Core/Widgets/TextWidget.h"
 #include "Game/Utilities/Constants.h"

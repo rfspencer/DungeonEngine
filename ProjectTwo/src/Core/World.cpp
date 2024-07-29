@@ -1,8 +1,15 @@
-﻿#include "Core/World.h"
+﻿/**
+* @file World.cpp
+ * @brief Implementation for the World class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#include "Core/World.h"
 
 #include "Core/Actor.h"
 #include "Core/Widgets/HUD.h"
-
 
 World::World(Application* OwningApp)
     : m_OwningApp(OwningApp), m_bBeginPlay(false), m_Actors(), m_PendingActors()

@@ -1,8 +1,15 @@
-﻿#pragma once
+﻿/**
+* @file FileHandler.h
+ * @brief Header for the FileHandler class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#pragma once
 
 #include <array>
 #include <string>
-#include <vector>
 
 #include "Utilities/Constants.h"
 

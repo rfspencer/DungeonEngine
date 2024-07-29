@@ -1,9 +1,23 @@
-﻿#pragma once
+﻿/**
+* @file TextWidget.h
+ * @brief Header for the TextWidget class
+ * @author Rich Spencer
+ * @cs-class CSCI-120-70
+ * @date July 29, 2024
+ */
+
+#pragma once
 
 #include <string>
 
 #include "Widget.h"
 
+/**
+ * @class TextWidget
+ * @brief A class that represents a text widget.
+ *
+ * The TextWidget class inherits from the Widget class and provides functionality to display and manipulate text.
+ */
 class TextWidget : public Widget
 {
 public:
