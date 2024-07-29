@@ -15,6 +15,8 @@ public:
     Object();
     virtual ~Object();
 
+    virtual void BeginPlay() { }
+
     virtual void Destroy();
     bool IsPendingDestroy() const { return m_IsPendingDestroy; }
 
