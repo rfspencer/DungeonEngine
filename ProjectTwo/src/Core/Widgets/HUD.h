@@ -12,8 +12,6 @@ public:
 
     bool HasInit() const { return m_HasInit; }
 
-    virtual void BeginPlay() { }
-
     virtual bool HandleEvent();
 
     virtual void Tick(float DeltaTime);
