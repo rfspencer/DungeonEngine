@@ -21,7 +21,7 @@ void DungeonLevel::BeginPlay()
     m_GameplayHUD = SpawnHUD<GameplayHUD>();
     m_Player = SpawnActor<Player>();
     // Set player start location
-    m_Player.lock()->SetActorLocation({3, 24});
+    m_Player.lock()->SetActorLocation({14, 22});
 }
 
 void DungeonLevel::Tick(float DeltaTime)
