@@ -22,9 +22,10 @@ void DungeonLevel::BeginPlay()
     m_GameplayHUD = SpawnHUD<GameplayHUD>();
 
     m_Player = PlayerManager::Get().CreateNewPlayer(this);
-    
     // Set player start location
     m_Player.lock()->SetActorLocation({14, 22});
+
+    m_GameplayHUD.lock()->BindDelegates();
 }
 
 void DungeonLevel::Tick(float DeltaTime)
