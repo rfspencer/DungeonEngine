@@ -17,7 +17,7 @@ void Map::Init(const std::string& InPath)
     if (FileHandler::DoesFileExist(InPath.c_str()))
     {
         TempString = FileHandler::ReadFile(InPath.c_str());
-        // m_MapLayout = FileHandler::StringToMap(TempString);
+        m_MapLayout = FileHandler::StringToMap(TempString);
     }
     SetSprite(TempString);
     // Broadcast Map is loaded
@@ -30,4 +30,14 @@ void Map::Render(Renderer& InRendererRef)
     {
         InRendererRef.DrawActor(this);
     }
+}
+
+bool Map::TileIsEmpty(Vector2i InPosition) const
+{
+    const char C = m_MapLayout[InPosition.Y][InPosition.X];
+    if (C == ' ')
+    {
+        return true;
+    }
+    return false;    
 }
