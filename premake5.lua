@@ -91,7 +91,8 @@ project "Game"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+        "Game/res/**" 
 	}
 
 	includedirs
