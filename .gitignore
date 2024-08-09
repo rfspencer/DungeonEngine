@@ -1,2 +1,13 @@
+# Directories
+.vs/
+bin/
+bin-int/
 
-LibraryMgtSys/
+# Files
+*.user
+*.vcxproj
+*.filters
+*.sln
+
+# JetBrains
+.idea/
