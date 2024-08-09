@@ -96,7 +96,8 @@ project "Game"
 
 	includedirs
 	{
-		"Engine/src"
+		"Engine/src",
+		"Game/src"
 	}
 
 	links
