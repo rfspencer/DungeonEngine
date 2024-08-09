@@ -1,3 +1,5 @@
+// Copyright (c) 2024 Rich Spencer. All rights reserved.
+
 #pragma once
 
 #include <string>
