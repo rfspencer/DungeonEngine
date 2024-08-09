@@ -1,4 +1,6 @@
-﻿#include "PlayerManager.h"
+﻿// Copyright (c) 2024 Rich Spencer. All rights reserved.
+
+#include "PlayerManager.h"
 
 #include "World.h"
 

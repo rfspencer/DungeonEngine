@@ -1,10 +1,4 @@
-﻿/**
-* @file MainMenuHUD.cpp
- * @brief Implementation for the MainMenuHUD class
- * @author Rich Spencer
- * @cs-class CSCI-120-70
- * @date July 29, 2024
- */
+﻿// Copyright (c) 2024 Rich Spencer. All rights reserved.
 
 #include "MainMenuHUD.h"
 
